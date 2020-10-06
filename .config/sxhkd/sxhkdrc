@@ -1,0 +1,187 @@
+
+# ███████╗██╗  ██╗██╗  ██╗██╗  ██╗██████╗
+# ██╔════╝╚██╗██╔╝██║  ██║██║ ██╔╝██╔══██╗
+# ███████╗ ╚███╔╝ ███████║█████╔╝ ██║  ██║
+# ╚════██║ ██╔██╗ ██╔══██║██╔═██╗ ██║  ██║
+# ███████║██╔╝ ██╗██║  ██║██║  ██╗██████╔╝
+# ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝
+
+#__________________ATAJOS BASICOS______________________
+
+#Terminal/launch menu:
+super + {Return,d}
+	{st,dmenu_run}
+
+#Actualizar sxhkdrc:
+alt + {Escape,r}
+	{pkill -USR1 -x sxhkd,bspc wm -r}
+
+#Cerrar apps:
+super + q
+	bspc node -{c,k}
+
+#Cerrar sesion bspwm:
+super + alt + q
+	killall panel;bspc quit
+
+#_______________PROGRAMAS INSTALADOS___________________
+
+#PcmanFM ect ect ect:
+super + {e,w,c,n,m,l,t,i}
+	{st -e ranger,navegador,pavucontrol,st -e nvim,st -e ncmpcpp,leafpad,telegram-desktop,st -e nmtui}
+
+super + shift + {m,e,c,t}
+	{env LD_PRELOAD=/usr/lib/spotify-adblock.so spotify %U,pcmanfm,st -e mutt,st -e htop}
+	
+#________________MANEJO DE VENTANAS____________________
+
+# cambiar de ventanas solo en el Escritorio Actual
+super + Tab
+	bspc node -f next.local.!hidden.window
+
+#Fijar ventana en todos los escritorios:
+super + shift + f
+	bspc node -g sticky
+
+#Rotar ventanas 90 grados 
+super { ,+ shift }+ o
+	bspc node @focused:/ -R {270,90}
+
+#Ventana flotante:
+super + s
+	bspc node focused -t \~floating
+
+#Cursor de ventanas:
+super + {_,shift + }{Left,Down,Up,Right}
+	bspc node -{f,s} {west,south,north,east}
+
+#Fullscreen / vicecersa:
+super + f
+	bspc node -t {fullscreen,tiled}
+
+#Cambiar de escritorio con 2 teclas:
+super + bracket{left,right}
+	bspc desktop -f {prev,next}.local
+
+#Enviar ventanas a otra area de trabajo:
+super + {_,shift + }{1-9,0}
+	bspc {desktop -f,node -d} '^{1-9,10}'
+
+#___________________PRE-SELECCION______________________
+
+#Preseleccion para lanzar ventanas:
+super + p
+	bspc node -p "~"{west,north,east,south}
+
+#Cancelar preseleccion:
+super + shift + p
+	bspc node -p cancel
+
+#Preseleccion tamaño:
+super + ctrl + {1-9}
+	bspc node -o 0.{1-9}
+
+#___________________MOVER VENTANAS_____________________
+
+#Mover ventanas:
+super + ctrl + {Left,Down,Up,Right}
+	bspc node -v {-20 0,0 20,0 -20,20 0}
+
+#Cambiar de tamaño de ventanas:
+super + alt + {Left,Down,Up,Right}
+	ventana {west,south,north,east}
+
+#Cambiar de tamaño las gaps:
+super { ,+ shift }+ z
+	bspc config window_gap $(($(bspc config window_gap) {+,-} 3))
+
+#_____________________MULTIMEDIA_______________________
+
+#Controlar volumen GLOBAL con Fs:
+shift + {F3,F2, F4}
+	pactl set-sink-{volume 0 +5%,volume 0 -5%,mute 0 toggle}
+
+#Controlar audio con drivers ALSA con tecla Funcion
+#XF86Audio{Mute,LowerVolume,RaiseVolume}
+#	amixer -q set Master {toggle, 2%-, 2%+}
+
+#Controlar audio GLOBAL con tecla Funcion
+XF86Audio{Mute,LowerVolume,RaiseVolume}
+	pactl set-sink-{mute 0 toggle,volume 0 -5%,volume 0 +5%}
+
+#Cambiar musica MPC con teclas Fs
+ctrl + shift + {F7,F8,F6,F5}
+	mpc {play,pause,next,prev}
+
+#Controles Spotify con teclas Fs:
+shift + {F5,F6,F7,F8}
+    dbus-send --print-reply --{dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous,dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next,dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause,dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause}
+
+#Controlar brillo con Fs:
+shift {F9,F10}
+	xbacklight -{dec 20,inc 10}
+
+#Subir bajar brillo con tecla Funcion
+XF86MonBrightness{Down,Up}
+	xbacklight -{dec,inc} 3
+
+#______________________SCRIPTS_________________________
+
+#Captura pantalla directo:
+Print
+	maim -m 1 captura-pantalla-"$(date '+%y%m%d-%H%M-%S').png"
+
+#Seleccionar area para captura:
+Print +  shift
+	captura
+
+#Menu de grabacion de video:
+super + Print
+	grabacion
+
+#Menu de apagado y recargar bspwm:
+super + BackSpace
+	apagado
+
+#____________________UTILIDADES________________________
+
+#Manual de usuario:
+alt + F1
+	setsid st -e less -Srf "$HOME/.config/sxhkd/sxhkdrc"
+
+#Reporte meteorologico local:
+alt + F2
+	setsid st -e less -Srf "/tmp/clima"
+
+#Calculadora:
+alt + F3
+	st -e bc -l
+
+#Agenda y calendario:
+alt + F4
+	st -e calcurse
+
+#Agenda y calendario:
+alt + F5
+	monitor
+	
+#Menu youtube
+alt + F6
+	 youtube
+	 
+#Menu youtube
+alt + F7
+	 programas	 
+
+#Menu youtube
+super + F12
+	 fondo /media/Datos/Publico
+
+#Screenkey ON:
+super + Scroll_Lock
+	screenkey --no-systray --no-whitespace  -f SF\\Compact\\Display
+
+#Screenkey OFF:
+super + shift + Scroll_Lock
+	killall screenkey
+	

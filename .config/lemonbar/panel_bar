@@ -1,0 +1,222 @@
+#!/bin/bash
+
+# ██████╗  █████╗ ███╗   ██╗███████╗██╗
+# ██╔══██╗██╔══██╗████╗  ██║██╔════╝██║
+# ██████╔╝███████║██╔██╗ ██║█████╗  ██║
+# ██╔═══╝ ██╔══██║██║╚██╗██║██╔══╝  ██║
+# ██║     ██║  ██║██║ ╚████║███████╗███████╗
+# ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚══════╝
+
+. "${HOME}/.cache/wal/colors.sh"
+
+num_mon=$(bspc query -M | wc -l)
+while read -r line ; do
+	case $line in
+		C*)
+			# HORA
+			hora=" ${line#?}"
+			;;
+		D*)
+			# FECHA
+			fecha=" ${line#?}"
+			;;
+		T*)
+			# TUTILO DE VENTANA
+			titulo=" ${line#?}"
+			;;
+		VI*)
+			# ICONO DE VOLUMEN
+			if [ ${line#??} == "on" ]
+			then
+			volumen_icono=%{F$color2}`echo -e ""`
+			else
+			volumen_icono=%{F$color2}`echo -e ""`
+			fi
+			;;
+		BP*)
+			# CARGA DE BATERIA 
+			carga_porcentaje="${line#??}"
+			if [ $carga_porcentaje -lt "12" ]
+			then
+			bateria=%{F$color2}`echo -e ""`
+			elif [ $carga_porcentaje -lt "37" ]
+			then
+			bateria=%{F$color2}`echo -e ""`
+			elif [ $carga_porcentaje -lt "62" ]
+			then
+			bateria=%{F$color2}`echo -e ""`
+			elif [ $carga_porcentaje -lt "87" ]
+			then
+			bateria=%{F$color2}`echo -e ""`
+			else
+			bateria=%{F$color2}`echo -e ""`
+			fi
+			carga_porcentaje=%{F$color7}`echo -e "$carga_porcentaje""%"`
+			;;
+		VP*)
+			# PORCENTAJE DE VOLUMEN
+			volumen_porcentaje="%{F$color7}${line#??}"%""
+			;;
+		BC*)
+			# ESTADO DE BATERIA DAÑADA O EN MAL ESTADO
+			if [ ${line#??} == "Unknown" ]
+			then
+			bateria_mala=%{F$color2}`echo -e ""`
+			else
+			bateria_mala=""
+			fi
+			;;
+		BU*)
+			# ESTADO DE BATERIA EN BUEN ESTADO
+			if [ ${line#??} == "Charging" ]
+			then
+			bateria_estado=%{F$color2}`echo -e ""`
+			elif [ ${line#??} == "Full" ]
+			then
+			bateria_estado=%{F$color2}`echo -e ""`
+			else
+			bateria_estado=""
+			fi
+			;;			
+ 		X*)
+			# BANDEJA DEL SISTEMA
+			temp_cpu=$(temp | awk '{print $1-0"°"}')
+#			kernel=$(uname -a | awk '{ print $1" "$3" "$8 }')
+#			horas=$(clock | awk '{print $2}')
+#			uso_cpu=$(top -bn1 | grep "Cpu" | awk 'NR==1 {print $2}')
+#			ssid=$(iw dev | grep 'ssid' | sed 's/ssid //g' | sed 's/\t*//g')
+#			red=$(essid)
+#			ram=$(free | grep Mem | awk '{printf("%.f%\n",$3/$2 * 100.0)}')
+			mem=$(free -h --kilo | awk 'NR==2 { print $3}')
+			wifi=$(cat /proc/net/wireless | awk 'NR==3 {printf "%0.0f%%\n", $3/70*100}')
+			musica_actual_mpc=$(mpc current -f '[%title% - %artist%|%file%] ')
+#			lluvia=$(sed '16q;d' "/tmp/clima" | grep -wo "[0-9]*%" | sort -rn | sed "s/^/ /g;1q" | tr -d '\n')
+#			temp_baja=$(sed '13q;d' "/tmp/clima" | grep -o "m\\([-+]\\)*[0-9]\\+" | sort -n -t 'm' -k 2n | sed -e 1b -e '$!d' | tr '\n|m' ' ' | awk '{print $1"°"}')
+#			temp_alta=$(sed '13q;d' "/tmp/clima" | grep -o "m\\([-+]\\)*[0-9]\\+" | sort -n -t 'm' -k 2n | sed -e 1b -e '$!d' | tr '\n|m' ' ' | awk '{print $2"°"}')
+			spotify_artista=$(dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.freedesktop.DBus.Properties.Get string:org.mpris.MediaPlayer2.Player string:Metadata | sed -nr '/xesam:artist"/,+2s/^ +string "(.*)"$/\1/p' | tail -1 | awk '{print $1" "$2" "$3" "$4 "-  "}')
+			spotify_titulo=$(dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.freedesktop.DBus.Properties.Get string:org.mpris.MediaPlayer2.Player string:Metadata | sed -nr '/xesam:title"/,+2s/^ +variant +string "(.*)"$/\1/p' | tail -1 | awk '{print $1" "$2" "$3" "$4" "$5" "$7" "$8}')
+			spotify_album=$(dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.freedesktop.DBus.Properties.Get string:org.mpris.MediaPlayer2.Player string:Metadata | sed -nr '/xesam:album"/,+2s/^ +variant +string "(.*)"$/\1/p' | tail -1)
+			spotify="${spotify_artista}${spotify_titulo}"
+			# BANDEJA AGRUPADA VA DE LA MANO CON TODO LO ANTERIOR
+#			clima="%{F$color2} %{F$color7}${lluvia}  %{F$color2} %{F$color7}${temp_baja}  %{F$color2} %{F$color7}${temp_alta}"
+			clima=$(awk '{print $2-+-c"°"}' /tmp/climasimple)
+			controles_musica="${boton_anterior}  ${boton_pausa}  ${boton_siguiente}"
+			sensores="%{F$color2} %{F$color7}${temp_cpu}  %{F$color2} %{F$color7}${mem}  ${volumen_icono} ${volumen_porcentaje}  ${bateria_mala}${bateria_estado} ${bateria} ${carga_porcentaje}"
+			systray="%{F$color2} %{F$olor7}${clima}  ${sensores}  %{F$color2}${boton_wifi} %{F$color7}${wifi}  %{F$color2}${boton_power}"
+			;;
+		Y*)
+			# BOTONES
+			boton_menu="%{A:programas:}%{A}"
+			boton_stop="%{A:mpc stop:}%{A}"
+			boton_power="%{A:apagado:}%{A}"
+			boton_wifi="%{A:st -e nmtui:}%{A}"
+#			boton_play="%{A:mpc play:}%{A}"
+			boton_pausa="%{A:mpc pause:}%{A}"
+			boton_anterior="%{A:mpc prev:}%{A}"
+			boton_siguiente="%{A:mpc next:}%{A}"
+#			boton_ramdom="%{A:mpc ramdom:}%{A}"
+#			boton_stop="%{A:mpc stop:}%{A}"
+#			boton_pausa="%{A:dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause:}%{A}"
+#			boton_anterior="%{A:dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous:}%{A}"
+#			boton_siguiente="%{A:dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next:}%{A}"
+			;;
+		W*)
+			# BSPWM ESCRITORIOS
+			escritorios=
+			IFS=':'
+			set -- ${line#?}
+			while [ $# -gt 0 ] ; do
+			item=$1
+			name=${item#?}
+			case $item in
+				[mM]*)
+					case $item in
+						m*)
+							# ESCRITORIO OCUPADO NO SELECCIONADO
+							FG=$color7
+							BG=$color0
+							on_focused_monitor=
+							;;
+						M*)
+							# ESCRITORIO ACTIVO
+							FG=$color7
+							BG=$color0
+							on_focused_monitor=1
+							;;
+							esac
+							[ $num_mon -lt 2 ] && shift && continue
+							escritorios="${escritorios}%{F${FG}}%{A:bspc monitor -f ${name}:} ${name} %{A}%{F-}"
+							;;
+							[fFoOuU]*)
+							case $item in
+						f*)
+							# ESCRITORIO VACIO SELECIONADO
+							FG=$color7
+							BG=$color0
+							UL=#dd181818
+							;;
+						F*)
+							if [ "$on_focused_monitor" ] ; then
+							# ESCRITORIO VACIO SELECIONADO
+							FG=$color7
+							BG=$color0
+							UL=$color7
+							else
+							# ESCRITORIO VACIO SELECIONADO
+							FG=$color7
+							BG=$color0
+							UL=$color7
+							fi
+							;;
+						o*)
+							# ESCRITORIO OCUPADO SELECCIONADO
+							FG=$color7
+							BG=$color0
+							UL=#dd181818
+							;;
+						O*)
+							if [ "$on_focused_monitor" ] ; then
+							# ESCRITORIO OCUPADO SELECIONADO
+							FG=$color7
+							BG=$color0
+							UL=$color7
+							else
+							# ESCRITORIO OCUPADO SELECIONADO
+							FG=$color7
+							BG=$color0
+							UL=$color7
+							fi
+							;;
+						u*)
+							# ESCRITORIO PARPADEANTE URGENTE
+							FG=#FF0000
+							BG=$color0
+							UL=#FF0000
+							;;
+						U*)
+							if [ "$on_focused_monitor" ] ; then
+							# ESCRITORIO PARPADEANTE URGENTE
+							FG=#FF0000
+							BG=$color0
+							UL=#FF0000
+							else
+							# ESCRITORIO PARPADEANTE URGENTE
+							FG=#FF0000
+							BG=$color0
+							UL=#FF0000
+							fi
+							;;
+						esac
+						escritorios="${escritorios}%{F${FG}}%{U${UL}}%{+u}%{A:bspc desktop -f ${name}:} ${name} %{A}%{F-}%{-u}"
+						;;
+					[LTG]*)
+						# LAYOUT MODO DE VENTANAS EN UNA LETRA O DOS
+						escritorios="${escritorios}"
+						;;
+				esac
+				shift
+			done
+			;;
+	esac
+	printf "%s\n" "%{l}  %{F$color2}${boton_menu}  ${escritorios}  %{F$color2}${controles_musica}   %{F$color7}${musica_actual_mpc}%{c}${fecha}${hora}%{r}${systray}  %{F-}"
+done

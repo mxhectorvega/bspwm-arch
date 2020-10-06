@@ -1,0 +1,40 @@
+#!/bin/sh
+
+unmountusb() {
+	[ -z "$drives" ] && exit
+	chosen="$(echo "$drives" | dmenu -i -p "¿Que unidad desea desmontar?")" || exit 1
+	chosen="$(echo "$chosen" | awk '{print $1}')"
+	[ -z "$chosen" ] && exit
+	sudo -A umount "$chosen" && notify-send "💻 USB desmontando" "$chosen desmontado."
+	}
+
+unmountandroid() { \
+	chosen="$(awk '/simple-mtpfs/ {print $2}' /etc/mtab | dmenu -i -p "¿Que dispositivo desea desmontar?")" || exit 1
+	[ -z "$chosen" ] && exit
+	sudo -A umount -l "$chosen" && notify-send "🤖 Desmontaje de Android" "$chosen desmontada."
+	}
+
+asktype() { \
+	choice="$(printf "USB\\nAndroid" | dmenu -i -p "¿Desmontar una unidad USB o un dispositivo Android?")" || exit 1
+	case "$choice" in
+		USB) unmountusb ;;
+		Android) unmountandroid ;;
+	esac
+	}
+
+drives=$(lsblk -nrpo "name,type,size,mountpoint" | awk '$4!~/\/boot|\/home$|SWAP/&&length($4)>1{printf "%s (%s)\n",$4,$3}')
+
+if ! grep simple-mtpfs /etc/mtab; then
+	[ -z "$drives" ] && echo "No hay unidades para desmontar." &&  exit
+	echo "Se detectó una unidad USB que no se puede montar."
+	unmountusb
+else
+	if [ -z "$drives" ]
+	then
+		echo "Se detectó un dispositivo Android que no se puede montar."
+	       	unmountandroid
+	else
+		echo "Se detectaron unidades USB y dispositivos Android que no se pueden montar."
+		asktype
+	fi
+fi

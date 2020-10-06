@@ -1,0 +1,7 @@
+#!/bin/sh
+
+bgloc="${XDG_DATA_HOME:-$HOME/.config}/fondo"
+[ -f "$1" ] && ln -sf "$(readlink -f "$1")" "$bgloc" && notify-send -i "$bgloc" "Cambiando fondo de escritorio..."
+[ -d "$1" ] && ln -sf "$(find "$(readlink -f "$1")" -iregex '.*.\(jpg\|jpeg\|png\|gif\)' -type f | shuf -n 1)" "$bgloc" && notify-send -i "$bgloc" "Buscando fondo de escritorio ramdom."
+wal -i "$(readlink -f "$bgloc")" -o "${XDG_CONFIG_HOME:-$HOME/.config}/wal/postrun" >/dev/null 2>&1
+bspc wm -r &

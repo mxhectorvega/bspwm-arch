@@ -1,0 +1,86 @@
+
+# ██████╗ ██╗   ██╗███╗   ██╗███████╗████████╗
+# ██╔══██╗██║   ██║████╗  ██║██╔════╝╚══██╔══╝
+# ██║  ██║██║   ██║██╔██╗ ██║███████╗   ██║
+# ██║  ██║██║   ██║██║╚██╗██║╚════██║   ██║
+# ██████╔╝╚██████╔╝██║ ╚████║███████║   ██║
+# ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝╚══════╝   ╚═╝
+
+
+#________________CONFIGURACION BASICA________________
+
+[global]
+    monitor = 0
+    follow = keyboard
+#    geometry = "350x5+506+25"
+    geometry = "350x5+790+25"
+    indicate_hidden = yes
+    shrink = no
+    transparency = 15
+    notification_height = 0
+    separator_height = 0
+    padding = 15
+    horizontal_padding = 10
+    frame_width = 0
+    frame_color = "#ffffff"
+
+#_________________FUENTE Y OTRAS COSAS_______________
+
+    separator_color = frame
+    sort = yes
+    idle_threshold = 120
+    font = SF Compact Display 9
+    line_height = 3
+    markup = full
+    format = "<b>%s</b>\n%b"
+    alignment = left
+    show_age_threshold = 60
+    word_wrap = yes
+
+#_____________ALINEACION Y TAMAÑO DEL TEXTO__________
+
+    ellipsize = middle
+    ignore_newline = no
+    stack_duplicates = true
+    hide_duplicate_count = true
+    show_indicators = yes
+    icon_position = left
+    max_icon_size = 50
+    sticky_history = yes
+    history_length = 20
+    dmenu = /usr/bin/dmenu -p dunst:
+    browser = /usr/bin/firefox -new-tab
+    always_run_script = true
+
+#___________________OTRAS CONFIGS____________________
+
+    title = Dunst
+    class = Dunst
+    startup_notification = false
+    force_xinerama = false
+[experimental]
+    per_monitor_dpi = false
+
+[shortcuts]
+    close = ctrl+space
+    close_all = ctrl+shift+space
+    history = ctrl+grave
+    context = ctrl+shift+period
+
+#______________COLORES DE FONDO Y ORILLA_____________
+
+[urgency_low]
+    background = "#181818"
+    foreground = "#ffffff"
+    timeout = 5
+
+[urgency_normal]
+    background = "#181818"
+    foreground = "#ffffff"
+    timeout = 5
+
+[urgency_critical]
+    background = "#181818"
+    foreground = "#ff0000"
+    frame_color = "#fff000"
+    timeout = 0

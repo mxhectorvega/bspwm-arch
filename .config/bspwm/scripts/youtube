@@ -1,0 +1,44 @@
+#!/bin/sh
+
+url=""
+quality=""
+arguments=""
+helperPath=`dirname "$0"`
+
+#Function for getting arguments for the downloader
+providearguments(){
+	arguments=`echo -e 'Si\nNo' |dmenu -i -fn 'sf compact text:bold:size=9' -p "Ya tenemos el formato. Desea descargar?"`
+	[[ $arguments = "" ]] && exit 0
+}
+
+#Function to select url from clipboard.
+#greenclip is here a clipboard manager.
+selecturl(){
+	url=`xclip -o -selection c print| xargs -0 | $helperPath/extract |dmenu -i -l 10 -fn 'sf compact text:bold:size=9' -p "MPV/YOUTUBE-DL: Esta es la URL del video?"`
+	[[ $url = "" ]] && exit 0
+}
+
+#function to use youtube-dl to fetch quality of videos.
+selectquality(){
+	quality=`notify-send "Espere" "Buscando formatos disponibles..." | youtube-dl -F $url | \
+	sed -n '7,50p' | \
+	dmenu -i -l 10 -fn 'sf compact text:bold:size=9' -p "Seleccione el formato y/o calidad:" | \
+	awk '{print $1;}'`
+	[[ $quality = "" ]] && exit 0
+}
+
+main(){
+	selecturl
+	selectquality
+	providearguments
+	quality=`echo $quality | sed 's/ /+/'`
+	if [[ $arguments = "No" ]]
+		then
+		mpv $url
+	else
+		echo "$arguments"
+		youtube-dl -f $quality $url
+	fi
+}
+
+main

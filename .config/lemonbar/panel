@@ -1,0 +1,69 @@
+#! /bin/sh
+
+# ██╗     ███████╗███╗   ███╗ ██████╗ ███╗   ██╗██████╗  █████╗ ██████╗
+# ██║     ██╔════╝████╗ ████║██╔═══██╗████╗  ██║██╔══██╗██╔══██╗██╔══██╗
+# ██║     █████╗  ██╔████╔██║██║   ██║██╔██╗ ██║██████╔╝███████║██████╔╝
+# ██║     ██╔══╝  ██║╚██╔╝██║██║   ██║██║╚██╗██║██╔══██╗██╔══██║██╔══██╗
+# ███████╗███████╗██║ ╚═╝ ██║╚██████╔╝██║ ╚████║██████╔╝██║  ██║██║  ██║
+# ╚══════╝╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+
+PANEL_FIFO=/tmp/panel-fifo
+PANEL_WM_NAME=bspwm_panel
+FUENTE_BAR="sf compact text:bold:size=9"
+FUENTE_ICONOS="Font Awesome 5 Free:style=Solid:size=10"
+FUENTE_ICONOS2="Font Awesome:style=Solid:size=10"
+FUENTE_ICONOS3="JoyPixels:style=Solid:size=10"
+BAR_POSICION="x25+0+0"
+
+if xdo id -a "$PANEL_WM_NAME" > /dev/null ; then
+printf "%s\n" "The panel is already running." >&2
+exit 1
+fi
+
+trap 'trap - TERM; kill 0'B TERM QUIT EXIT
+
+[ -e "$PANEL_FIFO" ] && rm "$PANEL_FIFO"
+mkfifo "$PANEL_FIFO"
+
+bspc subscribe report > "$PANEL_FIFO" &
+
+#HORA
+while true; do
+echo -e 'C' $(date +'%H:%M')
+sleep 5
+done > "$PANEL_FIFO" &
+
+#FECHA
+while true; do
+echo -e 'D' $(date +'  %a, %d %b')
+sleep 5
+done > "$PANEL_FIFO" &
+
+#VOLUMEN Y BATERIA
+volume -sf 'VI%s' > "$PANEL_FIFO" &
+volume -sf 'VP%i' > "$PANEL_FIFO" &
+
+#BATERIA
+battery -sf 'BC%s' > "$PANEL_FIFO" &
+battery -sf 'BP%i' > "$PANEL_FIFO" &
+battery -sf 'BU%s' > "$PANEL_FIFO" &
+
+#BARRA DE TITULOS
+xtitle -sf 'T%s\n' -t43 > "$PANEL_FIFO" &
+
+#TEMPERATURA
+temp -sf'X%.1f' -n0 > "$PANEL_FIFO" &
+
+#BOTONES
+echo -e 'Y\' > $PANEL_FIFO &
+
+
+. "${HOME}/.cache/wal/colors.sh"
+
+. panel_bar < "$PANEL_FIFO" | lemonbar -a 20 -u 3 -o +0 -f "$FUENTE_BAR" -f "$FUENTE_ICONOS" -f "$FUENTE_ICONOS2" -f "$FUENTE_ICONOS3" -n "$PANEL_WM_NAME" -g "$BAR_POSICION" -F "$color7" -B "#dd181818" | sh &
+
+wid=$(xdo id -m -a "$PANEL_WM_NAME")
+
+xdo above -t "$(xdo id -N Bspwm -n root | sort | head -n 1)" "$wid"
+
+wait
