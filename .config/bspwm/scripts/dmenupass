@@ -1,4 +1,0 @@
-#!/bin/sh
-. "${HOME}/.cache/wal/colors.sh"
-dmenu -bw 1 -fn SF\\Compact\\Text-10:Bold -P -p " $1 [ ⦁ ⦁ ⦁ ⦁ ⦁ ⦁ ⦁ ⦁ ⦁ ⦁ ]" <&- && echo
-
