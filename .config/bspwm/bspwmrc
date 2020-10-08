@@ -58,8 +58,8 @@ export BROWSER=firefox
 export READER=zathura
 export TERMINAL=st
 export EDITOR=nvim
-#curl -sf "wttr.in/VER?format=1" > /tmp/climasimple &
-#curl -sf "wttr.in/VER?lang=es" > /tmp/clima &
+curl -sf "wttr.in/VER?format=1" > /tmp/climasimple &
+curl -sf "wttr.in/VER?lang=es" > /tmp/clima &
 wal -i "$(< "${HOME}/.cache/wal/wal")"
 xsetroot -cursor_name left_ptr
 pgrep -x sxhkd > /dev/null
