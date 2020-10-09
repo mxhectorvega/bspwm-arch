@@ -27,14 +27,6 @@ mkfifo "$PANEL_FIFO"
 
 bspc subscribe report > "$PANEL_FIFO" &
 
-#NET
-while true; do
-echo -e 'N' $(ip addr | awk '/state UP/ { print $2 }' | cut -d":" -f1)
-sleep 5
-done > "$PANEL_FIFO" &
-
-
-
 #HORA
 while true; do
 echo -e 'C' $(date +'%H:%M')
@@ -43,32 +35,34 @@ done > "$PANEL_FIFO" &
 
 #FECHA
 while true; do
-echo -e 'D' $(date +'  %a, %d %b')
+echo -e 'D' $(date +'%a, %d %b')
 sleep 5
 done > "$PANEL_FIFO" &
+
+#BARRA DE TITULOS
+#xtitle -sf 'T%s\n' -t43 > "$PANEL_FIFO" &
+
+#TEMPERATURA
+temp -sf'X%.1f' -n0 > "$PANEL_FIFO" &
 
 #VOLUMEN Y BATERIA
 volume -sf 'VI%s' > "$PANEL_FIFO" &
 volume -sf 'VP%i' > "$PANEL_FIFO" &
 
 #BATERIA
-battery -sf 'BC%s' > "$PANEL_FIFO" &
 battery -sf 'BP%i' > "$PANEL_FIFO" &
 battery -sf 'BU%s' > "$PANEL_FIFO" &
 
-#BARRA DE TITULOS
-xtitle -sf 'T%s\n' -t43 > "$PANEL_FIFO" &
-
-#TEMPERATURA
-temp -sf'X%.1f' -n0 > "$PANEL_FIFO" &
+#CONEXIONES
+while true; do
+echo -e 'N' $(ip addr | awk '/state UP/ { print $2 }' | cut -d":" -f1)
+sleep 5
+done > "$PANEL_FIFO" &
 
 #BOTONES
 echo -e 'Y\' > $PANEL_FIFO &
 
-
-. "${HOME}/.cache/wal/colors.sh"
-
-. panel_bar < "$PANEL_FIFO" | lemonbar -a 20 -u 3 -o +0 -f "$FUENTE_BAR" -f "$FUENTE_ICONOS" -f "$FUENTE_ICONOS2" -f "$FUENTE_ICONOS3" -n "$PANEL_WM_NAME" -g "$BAR_POSICION" -F "$color7" -B "#dd181818" | sh &
+. panel_bar < "$PANEL_FIFO" | lemonbar -a 20 -u 3 -o +0 -f "$FUENTE_BAR" -f "$FUENTE_ICONOS" -f "$FUENTE_ICONOS2" -f "$FUENTE_ICONOS3" -n "$PANEL_WM_NAME" -g "$BAR_POSICION" -B "#dd181818" | sh &
 
 wid=$(xdo id -m -a "$PANEL_WM_NAME")
 

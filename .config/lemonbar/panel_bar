@@ -11,6 +11,18 @@
 num_mon=$(bspc query -M | wc -l)
 while read -r line ; do
 	case $line in
+		C*)
+			# HORA
+			hora=" %{A:st -e calcurse:}${line#?}%{A}"
+			;;
+		D*)
+			# FECHA
+			fecha=" %{A:st -e calcurse:}${line#?}%{A}"
+			;;
+		T*)
+			# TUTILO DE VENTANA
+			titulo=" ${line#?}"
+			;;
 		N*)
 			# CONEXIONES
 			if [ ${line#??} == "wlan0" ]
@@ -23,18 +35,6 @@ while read -r line ; do
 			red_icono="%{F$color2}%{A:st -e nmtui:}%{A}"
 			fi
 			;;
-		C*)
-			# HORA
-			hora=" ${line#?}"
-			;;
-		D*)
-			# FECHA
-			fecha=" ${line#?}"
-			;;
-		T*)
-			# TUTILO DE VENTANA
-			titulo=" ${line#?}"
-			;;
 		VI*)
 			# ICONO DE VOLUMEN
 			if [ ${line#??} == "on" ]
@@ -43,6 +43,10 @@ while read -r line ; do
 			else
 			volumen_icono=%{F$color2}`echo -e ""`
 			fi
+			;;
+		VP*)
+			# PORCENTAJE DE VOLUMEN
+			volumen_porcentaje="%{F$color7}${line#??}"%""
 			;;
 		BP*)
 			# CARGA DE BATERIA 
@@ -64,25 +68,15 @@ while read -r line ; do
 			fi
 			carga_porcentaje=%{F$color7}`echo -e "$carga_porcentaje""%"`
 			;;
-		VP*)
-			# PORCENTAJE DE VOLUMEN
-			volumen_porcentaje="%{F$color7}${line#??}"%""
-			;;
-		BC*)
-			# ESTADO DE BATERIA DAÑADA O EN MAL ESTADO
-			if [ ${line#??} == "Unknown" ]
-			then
-			bateria_mala=%{F$color2}`echo -e ""`
-			else
-			bateria_mala=""
-			fi
-			;;
 		BU*)
-			# ESTADO DE BATERIA EN BUEN ESTADO
+			# ESTADO DE BATERIA
 			if [ ${line#??} == "Charging" ]
 			then
 			bateria_estado=%{F$color2}`echo -e ""`
 			elif [ ${line#??} == "Full" ]
+			then
+			bateria_estado=%{F$color2}`echo -e ""`
+			elif [ ${line#??} == "Unknown" ]
 			then
 			bateria_estado=%{F$color2}`echo -e ""`
 			else
@@ -91,41 +85,42 @@ while read -r line ; do
 			;;			
  		X*)
 			# BANDEJA DEL SISTEMA
-			mem_icono=%{F$color2}
-			temp_icono=%{F$color2}
-			lluvia_icono%{F$color2}
-			brillo_icono=%{F$color2}
-			temp_alta_icono%{F$color2}
-			temp_baja_icono%{F$color2}
-#			red=%{F$color7}$(essid)
+			mem_icono="%{F$color2}%{A:st -e htop:}%{A}"
+			temp_icono="%{F$color2}"
+#			lluvia_icono="%{F$color2}%{A:setsid st -e less -Srf "/tmp/clima":}%{A}"%{F$color2}
+			brillo_icono="%{F$color2}"
+			micro_icono="%{F$color2}%{A:pavucontrol:}%{A}"
+#			temp_alta_icono="%{F$color2}%{A:setsid st -e less -Srf "/tmp/clima":}%{A}"%{F$color2}
+#			temp_baja_icono="%{F$color2}%{A:setsid st -e less -Srf "/tmp/clima":}%{A}"%{F$color2}
+			clima_icono="%{F$color2}%{A:setsid st -e less -Srf "/tmp/clima":}%{A}"
+#			essid=%{F$color7}$(essid)
 #			horas=%{F$color7}$(clock | awk '{print $2}')
+			micro=%{F$color7}$(amixer get Capture | awk -F'[][]' 'END{ print $2 }')
 			brillo=%{F$color7}$(xbacklight | sed 's/\..*/%/')
 			temp_cpu=%{F$color7}$(temp | awk '{print $1-0"°"}')
 			mem=%{F$color7}$(free -h --kilo | awk 'NR==2 { print $3}')
-			clima=%{F$olor7}$(awk '{print $2-+-c"°"}' /tmp/climasimple)
+			clima=%{F$color7}$(awk '{print $2-+-c"°"}' /tmp/climasimple)
 #			kernel=%{F$color7}$(uname -a | awk '{ print $1" "$3" "$8 }')
 #			uso_cpu=%{F$color7}$(top -bn1 | grep "Cpu" | awk 'NR==1 {print $2}')
 #			ram=%{F$color7}$(free | grep Mem | awk '{printf("%.f%\n",$3/$2 * 100.0)}')
-#			ssid=%{F$color7}$(iw dev | grep 'ssid' | sed 's/ssid //g' | sed 's/\t*//g')
 			musica_actual_mpc=%{F$color7}$(mpc current -f '[%title% - %artist%|%file%] ')
 #			teclado=%{F$color7}$(setxkbmap -query | grep layout | tr -s ' ' | cut -d ' ' -f2)
-			wifi=%{F$color7}$(cat /proc/net/wireless | awk 'NR==3 {printf "%0.0f%%\n", $3/70*100}')
+			wifi_nivel=%{F$color7}$(cat /proc/net/wireless | awk 'NR==3 {printf "%0.0f%%\n", $3/70*100}')
 #			lluvia=%{F$color7}$(sed '16q;d' "/tmp/clima" | grep -wo "[0-9]*%" | sort -rn | sed "s/^/ /g;1q" | tr -d '\n')
 #			temp_baja=%{F$color7}$(sed '13q;d' "/tmp/clima" | grep -o "m\\([-+]\\)*[0-9]\\+" | sort -n -t 'm' -k 2n | sed -e 1b -e '$!d' | tr '\n|m' ' ' | awk '{print $1"°"}')
 #			temp_alta=%{F$color7}$(sed '13q;d' "/tmp/clima" | grep -o "m\\([-+]\\)*[0-9]\\+" | sort -n -t 'm' -k 2n | sed -e 1b -e '$!d' | tr '\n|m' ' ' | awk '{print $2"°"}')
-			spotify_artista=%{F$color7}$(dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.freedesktop.DBus.Properties.Get string:org.mpris.MediaPlayer2.Player string:Metadata | sed -nr '/xesam:artist"/,+2s/^ +string "(.*)"$/\1/p' | tail -1 | awk '{print $1" "$2" "$3" "$4 "-  "}')
-			spotify_titulo=%{F$color7}$(dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.freedesktop.DBus.Properties.Get string:org.mpris.MediaPlayer2.Player string:Metadata | sed -nr '/xesam:title"/,+2s/^ +variant +string "(.*)"$/\1/p' | tail -1 | awk '{print $1" "$2" "$3" "$4" "$5" "$7" "$8}')
-			spotify_album=%{F$color7}$(dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.freedesktop.DBus.Properties.Get string:org.mpris.MediaPlayer2.Player string:Metadata | sed -nr '/xesam:album"/,+2s/^ +variant +string "(.*)"$/\1/p' | tail -1)
+#			spotify_artista=%{F$color7}$(dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.freedesktop.DBus.Properties.Get string:org.mpris.MediaPlayer2.Player string:Metadata | sed -nr '/xesam:artist"/,+2s/^ +string "(.*)"$/\1/p' | tail -1 | awk '{print $1" "$2" "$3" "$4 "-  "}')
+#			spotify_titulo=%{F$color7}$(dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.freedesktop.DBus.Properties.Get string:org.mpris.MediaPlayer2.Player string:Metadata | sed -nr '/xesam:title"/,+2s/^ +variant +string "(.*)"$/\1/p' | tail -1 | awk '{print $1" "$2" "$3" "$4" "$5" "$7" "$8}')
+#			spotify_album=%{F$color7}$(dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.freedesktop.DBus.Properties.Get string:org.mpris.MediaPlayer2.Player string:Metadata | sed -nr '/xesam:album"/,+2s/^ +variant +string "(.*)"$/\1/p' | tail -1)
 			# BANDEJA AGRUPADA VA DE LA MANO CON TODO LO ANTERIOR
-			spotify="%{F$color7}${spotify_artista}${spotify_titulo}"
+#			spotify="%{F$color7}${spotify_artista}${spotify_titulo}"
 			controles_musica="${boton_anterior}  ${boton_pausa}  ${boton_siguiente}"
-			sensores="${mem_icono} ${mem}  ${brillo_icono} ${brillo}  ${volumen_icono} ${volumen_porcentaje}  ${temp_icono} ${temp_cpu}  ${bateria_mala}${bateria_estado} ${bateria} ${carga_porcentaje}"
-			systray="${boton_clima} ${clima}  ${sensores}  ${red_icono} ${wifi}  ${boton_power}"
+			sensores="${mem_icono} ${mem}  ${brillo_icono} ${brillo}  ${micro_icono} ${micro}  ${volumen_icono} ${volumen_porcentaje}  ${temp_icono} ${temp_cpu}  ${bateria_mala}${bateria_estado} ${bateria} ${carga_porcentaje}"
+			systray="${clima_icono} ${clima}  ${sensores}  ${red_icono} ${wifi_nivel}  ${boton_power}"
 			;;
 		Y*)
 			# BOTONES
-			boton_stop="%{F$color2}%{A:mpc stop:}%{A}"
-#			boton_stop=%{F$color2}"%{A:mpc stop:}%{A}"
+#			boton_stop="%{F$color2}%{A:mpc stop:}%{A}"
 			boton_play="%{F$color2}%{A:mpc play:}%{A}"
 			boton_menu="%{F$color2}%{A:programas:}%{A}"
 			boton_pausa="%{F$color2}%{A:mpc pause:}%{A}"
@@ -134,7 +129,6 @@ while read -r line ; do
 #			boton_ramdom="%{F$color2}%{A:mpc ramdom:}%{A}"
 			boton_siguiente="%{F$color2}%{A:mpc next:}%{A}"
 			boton_power="%{F$color2}%{A:apagado:}%{A}"
-			boton_clima="%{F$color2}%{A:setsid st -e less -Srf "/tmp/clima":}%{A}"
 #			boton_pausa="%{F$color2}%{A:dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause:}%{A}"
 #			boton_anterior="%{F$color2}%{A:dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous:}%{A}"
 #			boton_siguiente="%{F$color2}%{A:dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next:}%{A}"
