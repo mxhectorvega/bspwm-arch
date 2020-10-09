@@ -75,5 +75,4 @@ https://t.me/mxhectorvega
 
 **Creditos:**
 
-@mxhectorvega @darch7 @bourne_again
-# dotfiles
+@mxhectorvega @tenshalito @bourne_again @darch7
