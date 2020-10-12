@@ -62,7 +62,7 @@ battery -sf 'BU%s' > "$PANEL_FIFO" &
 #BOTONES
 #echo -e 'Y\' > $PANEL_FIFO &
 
-. panel_bar < "$PANEL_FIFO" | lemonbar -a 20 -u 3 -o +0 -f "$FUENTE_BAR" -f "$FUENTE_ICONOS" -f "$FUENTE_ICONOS2" -f "$FUENTE_ICONOS3" -n "$PANEL_WM_NAME" -g "$BAR_POSICION" -B "#dd181818" | sh &
+. panel_bar < "$PANEL_FIFO" | lemonbar -a 30 -u 3 -o +0 -f "$FUENTE_BAR" -f "$FUENTE_ICONOS" -f "$FUENTE_ICONOS2" -f "$FUENTE_ICONOS3" -n "$PANEL_WM_NAME" -g "$BAR_POSICION" -B "#dd181818" | sh &
 
 wid=$(xdo id -m -a "$PANEL_WM_NAME")
 xdo above -t "$(xdo id -N Bspwm -n root | sort | head -n 1)" "$wid"

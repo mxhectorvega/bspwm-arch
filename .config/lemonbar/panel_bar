@@ -86,7 +86,6 @@ while read -r line ; do
  		X*)
 			# ICONOS
 			icono_brillo="%{F$color2}"
-			icono_microfono="%{F$color2}"
 			icono_temperatura="%{F$color2}"
 			icono_play="%{F$color2}%{A:mpc play:}%{A}"
 			icono_power="%{F$color2}%{A:apagado:}%{A}"
@@ -95,6 +94,7 @@ while read -r line ; do
 			icono_mpc_pausa="%{F$color2}%{A:mpc pause:}%{A}"
 			icono_mpc_anterior="%{F$color2}%{A:mpc prev:}%{A}"
 			icono_mpc_siguiente="%{F$color2}%{A:mpc next:}%{A}"
+			icono_microfono="%{F$color2}%{F$color2}%{A:st -e alsamixer:}%{A}"
 			icono_clima="%{F$color2}%{A:setsid st -e less -Srf "/tmp/clima":}%{A}"
 #			icono_stop="%{F$color2}%{A:mpc stop:}%{A}"
 #			icono_lluvia="%{F$color2}%{A:mpc stop:}%{A}"
@@ -168,19 +168,23 @@ while read -r line ; do
 							UL=$color7
 							else
 							# ESCRITORIO VACIO NO SELECIONADO
+							FG=$color7
 							UL=$color7
 							fi
 							;;
 						o*)
 							# ESCRITORIO OCUPADO NO SELECCIONADO
+							FG=$color7
 							UL=#dd181818
 							;;
 						O*)
 							if [ "$on_focused_monitor" ] ; then
 							# ESCRITORIO OCUPADO SELECIONADO
+							FG=$color7
 							UL=$color7
 							else
 							# ESCRITORIO OCUPADO SELECIONADO
+							FG=$color7
 							UL=$color7
 							fi
 							;;
@@ -191,8 +195,10 @@ while read -r line ; do
 							;;
 						U*)
 							if [ "$on_focused_monitor" ] ; then
+							FG=$color7
 							UL=#dd181818
 							else
+							FG=$color7
 							UL=#dd181818
 							fi
 							;;
