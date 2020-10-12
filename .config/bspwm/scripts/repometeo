@@ -1,2 +1,2 @@
 #!/bin/bash
-curl -s wttr.in/veracruz?lang=es | sed -n 8,37p
+curl -s wttr.in/VER?lang=es

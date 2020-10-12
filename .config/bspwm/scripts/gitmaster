@@ -12,4 +12,4 @@ TIME=$(date +"%a %-d %b %g %H:%M")
 git commit -m "$COMMENT $TIME"
 
 # actualizar archivos
-git push
+git push -u origin master

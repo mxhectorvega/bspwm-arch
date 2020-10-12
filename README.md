@@ -3,7 +3,7 @@ Configuraciones personales
 
 BSPwm con Lemonbar personalizados e integrados con Dmenu y un par de scripts que facilitan el uso diario, sin sacrificar el rendimiento.
 
-<img src="https://github.com/mxhectorvega/mxhectorvega.github.io/blob/master/archivos/screenshot.png" /></div>
+<img src="https://raw.githubusercontent.com/mxhectorvega/mxhectorvega.github.io/master/archivos/screenshot.png" />
 
 **Instalacion**
 
@@ -38,19 +38,28 @@ chmod -R +x ~/.config/{bspwm,lemonbar,ranger}
 ```
 
 En caso de no tener pantalla de inicio de sesion, agregar `exec bspwm` al
-archivo **~/.xinitrc** (si no cuenta con el archivo, cree uno nuevo y asigne
+archivo **~/.xinitrc, .xprofile o start.sh** (si no cuenta con el archivo, cree uno nuevo y asigne
 permisos de ejecucion con `chmod +x`).
 
 **Dependencias**
 
 ```
-sudo pacman -S xcompmgr ueberzug youtube-dl ffmpegthumbnailer gst-plugins-good gst-libav feh mpd mpc ncmpcpp slock firefox telegram-desktop htop xarchiver neofetch leafpad ranger pcmanfm lxappearance dunst maim xclip sxiv xdotool calcurse zathura zathura-pdf-mupdf neovim mpv screenkey
+sudo pacman -S devilspie xcompmgr ueberzug youtube-dl ffmpegthumbnailer gst-plugins-good gst-libav feh mpd mpc ncmpcpp slock firefox telegram-desktop htop xarchiver neofetch leafpad ranger pcmanfm lxappearance dunst maim xclip sxiv xdotool calcurse zathura zathura-pdf-mupdf neovim mpv screenkey
+
+yay -S transset-df
+
 ```
 
 **Fuentes y temas**
 
 ```
-yay -S ttf-joypixel sotf-font-awesome-5-free awesome-terminal-fonts ttf-menlo-powerline-git otf-san-francisco-compact nerd-fonts-sf-mono materia-gtk-theme materia-kde papirus-icon-theme
+yay -S otf-sfmono nerd-fonts-mononoki ttf-joypixel sotf-font-awesome-5-free awesome-terminal-fonts ttf-menlo-powerline-git otf-san-francisco-compact nerd-fonts-sf-mono materia-gtk-theme materia-kde papirus-icon-theme
+```
+
+**Bordes de ventanas redondeados (opcional)**
+
+```
+picom-ibhagwan-git
 ```
 
 **Drives de Pulseaudio (opcional)**

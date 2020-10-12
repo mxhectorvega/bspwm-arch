@@ -63,9 +63,12 @@ curl -sf "wttr.in/VER?lang=es" > /tmp/clima &
 wal -i "$(< "${HOME}/.cache/wal/wal")"
 xsetroot -cursor_name left_ptr
 pgrep -x sxhkd > /dev/null
+xrdb -merge ~/.Xresources
 xset r rate 300 50 &
 recargardunst &
+devilspie -a &
 pkill -9 panel
+xset b off &
 unclutter &
 xcompmgr &
 panel &
