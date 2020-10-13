@@ -5,7 +5,7 @@
  reload_dunst() {
     pkill dunst
     dunst \
-	-frame_width 1 \
+	-frame_width 3 \
         -frame_color "${color2}" \
         -lf "${color7}" \
         -bf "${color7}" \

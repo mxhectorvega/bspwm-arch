@@ -1,0 +1,2 @@
+#!/bin/sh
+find /media/Datos | sed 's/ /\\ /g' | sort -f | dmenu -i -p "Buscar archivos:" -l 30 | xargs xdg-open

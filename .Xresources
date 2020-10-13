@@ -10,18 +10,18 @@ Xft.hintstyle: hintfull
 Xft.lcdfilter: lcdfilter
 XTerm*renderFont: true
 XTerm*faceName: xft:Mononoki Nerd Font, \
-                xft:SF Mono:size=9, \
-                xft:SF Mono:style=Medium:size=9   
+				xft:SF Mono:size=9, \
+				xft:SF Mono:style=Medium:size=9   
 XTerm*faceSize: 9
 XTerm*utf8: 2
 XTerm*locale: true
-XTerm.vt100.translations: #override \n\
-  Ctrl <Key> j: smaller-vt-font() \n\
-  Ctrl <Key> k: larger-vt-font()
+xterm.vt100.translations: #override \n\
+				Alt Shift <Key>Down: smaller-vt-font() \n\
+				Alt Shift <Key>Up: larger-vt-font()
 XTerm*loginshell: true
 XTerm*savelines: 16384
 XTerm*selectToClipboard: true
 XTerm*charClass: 33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
 xterm*VT100.Translations: #override \
-                Alt <Key>V:    insert-selection(SELECT) \n\
-                Alt <Key>C:    copy-selection(SELECT)
+				Alt <Key>V:    insert-selection(SELECT) \n\
+				Alt <Key>C:    copy-selection(SELECT)

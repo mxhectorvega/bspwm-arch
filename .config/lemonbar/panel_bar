@@ -30,9 +30,9 @@ while read -r line ; do
 			icono_redes="%{F$color2}%{A:st -e nmtui:}%{A}"
 			elif [ ${line#??} = enp0s25 ]
 			then
-			icono_redes="%{F$color2}%{A:st -e nmtui:}%{A}"
-			else
-			icono_redes="%{F$color2}%{A:st -e nmtui:}%{A}"
+			icono_redes="%{F$color2}%{A:st -e nmtui:}%{F$color7} Red%{A}"
+						else
+			icono_redes="%{F$color2}%{A:st -e nmtui:}%{F$color7} Red%{A}"
 			fi
 			;;
 		VI*)
@@ -89,7 +89,7 @@ while read -r line ; do
 			icono_temperatura="%{F$color2}"
 			icono_play="%{F$color2}%{A:mpc play:}%{A}"
 			icono_power="%{F$color2}%{A:apagado:}%{A}"
-			icono_ram="%{F$color2}%{A:xterm htop:}%{A}"
+			icono_ram="%{F$color2}%{A:st -e htop:}%{A}"
 			icono_menu="%{F$color2}%{A:programas:}%{A}"
 			icono_mpc_pausa="%{F$color2}%{A:mpc pause:}%{A}"
 			icono_mpc_anterior="%{F$color2}%{A:mpc prev:}%{A}"

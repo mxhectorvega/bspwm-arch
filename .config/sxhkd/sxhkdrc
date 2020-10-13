@@ -12,6 +12,10 @@
 super + {Return,d}
 	{st,dmenu_run}
 
+#Menu programas facil
+super + shift + d
+	programas
+
 #Actualizar sxhkdrc:
 alt + {Escape,r}
 	{pkill -USR1 -x sxhkd,bspc wm -r}
@@ -26,12 +30,13 @@ super + alt + q
 
 #_______________PROGRAMAS INSTALADOS___________________
 
-#PcmanFM ect ect ect:
+#Ranger, chromium, pavucontrol, neovim, mpc musica, leafpad, telegram, gestor redes.
 super + {e,w,c,n,m,l,t,i}
-	{st -e ranger,navegador,pavucontrol,st -e nvim,st -e ncmpcpp,leafpad,telegram-desktop,st -e nmtui}
+	{st -e ranger,chromium,pavucontrol,st -e nvim,st -e ncmpcpp,leafpad,telegram-desktop,st -e nmtui}
 
-super + shift + {m,e,c,t}
-	{env LD_PRELOAD=/usr/lib/spotify-adblock.so spotify %U,pcmanfm,st -e mutt,st -e htop}
+#Surf, spotifi, pcmanfm, mutt, htop
+super + shift + {w,m,e,c,t}
+	{navegador,env LD_PRELOAD=/usr/lib/spotify-adblock.so spotify %U,pcmanfm,st -e mutt,st -e htop}
 	
 #________________MANEJO DE VENTANAS____________________
 
@@ -97,27 +102,27 @@ super { ,+ shift }+ z
 
 #_____________________MULTIMEDIA_______________________
 
-#Controlar volumen GLOBAL con Fs:
-shift + {F3,F2, F4}
-	pactl set-sink-{volume 0 +5%,volume 0 -5%,mute 0 toggle}
-
 #Controlar audio con drivers ALSA con tecla Funcion
 #XF86Audio{Mute,LowerVolume,RaiseVolume}
 #	amixer -q set Master {toggle, 2%-, 2%+}
 
-#Controlar audio GLOBAL con tecla Funcion
+#Controlar volumen global Pulseaudio con teclas FFF:
+shift + {F3,F2, F4}
+	pactl set-sink-{volume 0 +5%,volume 0 -5%,mute 0 toggle}
+
+#Controlar volumen global Pulseaudio con tecla Funcion:
 XF86Audio{Mute,LowerVolume,RaiseVolume}
 	pactl set-sink-{mute 0 toggle,volume 0 -5%,volume 0 +5%}
 
-#Cambiar musica MPC con teclas Fs
+#Cambiar musica MPC con teclas Ctrl + Shift + FFF:
 ctrl + shift + {F7,F8,F6,F5}
 	mpc {play,pause,next,prev}
 
-#Controles Spotify con teclas Fs:
+#Controles Spotify con teclas Shift + FFF:
 shift + {F5,F6,F7,F8}
     dbus-send --print-reply --{dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous,dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next,dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause,dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause}
 
-#Controlar brillo con Fs:
+#Controlar brillo con tecla Shif + FFF:
 shift {F9,F10}
 	xbacklight -{dec 20,inc 10}
 
@@ -131,8 +136,12 @@ XF86MonBrightness{Down,Up}
 Print
 	maim -m 1 captura-pantalla-"$(date '+%y%m%d-%H%M-%S').png"
 
+#Captura con 4 segundos de retraso
+super + ctrl + Print + 
+	scrot -q 100 -d 4 captura-pantalla-%y%m%d-%H%M-%S.png
+
 #Seleccionar area para captura:
-Print +  shift
+Print + shift
 	captura
 
 #Menu de grabacion de video:
@@ -146,36 +155,52 @@ super + BackSpace
 #____________________UTILIDADES________________________
 
 #Manual de usuario:
-alt + F1
+super + F1
 	setsid st -e less -Srf "$HOME/.config/sxhkd/sxhkdrc"
 
 #Reporte meteorologico local:
-alt + F2
+super + F2
 	setsid st -e less -Srf "/tmp/clima"
 
 #Calculadora:
-alt + F3
-	st -e bc -l
+super + F3
+	st -e bc -lq
 
 #Agenda y calendario:
-alt + F4
+super + F4
 	st -e calcurse
 
-#Agenda y calendario:
-alt + F5
+#monitor:
+super + F5
 	monitor
 	
 #Menu youtube
-alt + F6
+super + F6
 	youtube
-	 
-#Menu youtube
-alt + F7
-	programas	 
 
-#Menu youtube
+#Menu montar
+super + F7
+	montar
+
+#Menu desmontar
+super + F8
+	desmontar
+
+#Menu buscar archivos en SSD
+super + F9
+	buscardatos
+
+#Menu buscar archivos en HOME
+super + F10
+	buscarhome
+
+#Notificacion fondo escritorio
+super + F11
+		notify-send -i $HOME/.config/fondo "Buscando fondo de escritorio ramdom."
+
+#Cambia fondo escritorio
 super + F12
-	fondo /media/Datos/Publico
+		fondo /media/Datos/Imagenes
 
 #Screenkey ON:
 super + Scroll_Lock

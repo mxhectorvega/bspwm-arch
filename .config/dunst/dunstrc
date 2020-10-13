@@ -12,11 +12,11 @@
 [global]
     monitor = 0
     follow = keyboard
-#    geometry = "350x5+506+25"
-    geometry = "350x5+790+25"
+    geometry = "350x5+506+25"
+#    geometry = "350x5+790+25"
     indicate_hidden = yes
     shrink = no
-    transparency = 15
+    transparency = 25
     notification_height = 0
     separator_height = 0
     padding = 15
