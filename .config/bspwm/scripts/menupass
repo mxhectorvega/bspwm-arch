@@ -1,7 +1,7 @@
 #!/bin/sh
 
 #DEFINIR ANCHO Y NUMERO DE LINEAS HORIZONTALES
-menu_alto_lineas=10
+menu_alto_lineas=2
 menu_ancho=400
 #MEDIDAS DE MONITOR NO TOCAR
 monitor_ancho=$(xrandr | awk '/*/ {print $1}' | cut -c 1-4)

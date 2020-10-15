@@ -7,7 +7,7 @@ menu_ancho=400
 monitor_ancho=$(xrandr | awk '/*/ {print $1}' | cut -c 1-4)
 monitor_alto=$(xrandr | awk '/*/ {print $1}' | cut -c 6-9)
 #ALINEAR A LA DERECHA ARRIBA
-XX=$(( $monitor_ancho - $menu_ancho -5 ))
+XX=$(( $monitor_ancho - $menu_ancho -0 ))
 YY=$(( 25 ))
 #ALINEADO A LA IZQUIERA ARRIBA
 #XX=0

@@ -3,9 +3,11 @@ Configuraciones personales
 
 BSPwm con Lemonbar personalizados e integrados con Dmenu y un par de scripts que facilitan el uso diario, sin sacrificar el rendimiento.
 
-<img src="https://raw.githubusercontent.com/mxhectorvega/mxhectorvega.github.io/master/archivos/screen1.png" />
+<img src="https://raw.githubusercontent.com/mxhectorvega/mxhectorvega.github.io/master/archivos/screen3.png" />
 
 <img src="https://raw.githubusercontent.com/mxhectorvega/mxhectorvega.github.io/master/archivos/screen2.png" />
+
+<img src="https://raw.githubusercontent.com/mxhectorvega/mxhectorvega.github.io/master/archivos/screen1.png" />
 
 **Instalacion**
 
@@ -88,4 +90,4 @@ https://t.me/mxhectorvega
 
 **Creditos:**
 
-@mxhectorvega @tenshalito @bourne_again @darch7
+@mxhectorvega @tenshalito @bourne_again @darch7 @codeassault
