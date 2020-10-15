@@ -1,4 +1,24 @@
 #!/bin/sh
+
+#DEFINIR ANCHO Y NUMERO DE LINEAS HORIZONTALES
+menu_alto_lineas=15
+menu_ancho=300
+#MEDIDAS DE MONITOR NO TOCAR
+monitor_ancho=$(xrandr | awk '/*/ {print $1}' | cut -c 1-4)
+monitor_alto=$(xrandr | awk '/*/ {print $1}' | cut -c 6-9)
+#ALINEAR A LA DERECHA ARRIBA
+#XX=$(( $monitor_ancho - $menu_ancho -5 ))
+#YY=$(( 25 ))
+#ALINEADO A LA IZQUIERA ARRIBA
+XX=0
+YY=25
+#ALINEADO AL CENTRO
+#menu_alto_pixeles=$(( $menu_alto_lineas * 10 ))
+#menu_mitad_ancho=$(( $menu_ancho / 2 ))
+#XX=$(( $monitor_ancho / 2 - $menu_mitad_ancho ))
+#YY=$(( $monitor_alto / 2 - $menu_alto_pixeles ))
+
+
 DESKTOP_FILES="$(du -ha /usr/share/applications/ | grep .desktop | awk '{print $2}')"
 declare -A HASHMAP
 for FILE in $DESKTOP_FILES
@@ -9,6 +29,6 @@ do
         fi
         HASHMAP["$APP_NAME"]=$FILE
 done
-SELECTION=$(printf "%s\n" "${!HASHMAP[@]}" | dmenu -i -l 10)
+SELECTION=$(printf "%s\n" "${!HASHMAP[@]}" | dmenu -i -l $menu_alto_lineas -w $menu_ancho -x $XX -y $YY)
 gtk-launch "$(echo ${HASHMAP[$SELECTION]} | sed 's/\/usr\/share\/applications\///g')"
 exit

@@ -1,18 +1,36 @@
 #!/bin/sh
 
+#DEFINIR ANCHO Y NUMERO DE LINEAS HORIZONTALES
+menu_alto_lineas=10
+menu_ancho=400
+#MEDIDAS DE MONITOR NO TOCAR
+monitor_ancho=$(xrandr | awk '/*/ {print $1}' | cut -c 1-4)
+monitor_alto=$(xrandr | awk '/*/ {print $1}' | cut -c 6-9)
+#ALINEAR A LA DERECHA ARRIBA
+XX=$(( $monitor_ancho - $menu_ancho -5 ))
+YY=$(( 25 ))
+#ALINEADO A LA IZQUIERA ARRIBA
+#XX=0
+#YY=25
+#ALINEADO AL CENTRO
+#menu_alto_pixeles=$(( $menu_alto_lineas * 10 ))
+#menu_mitad_ancho=$(( $menu_ancho / 2 ))
+#XX=$(( $monitor_ancho / 2 - $menu_mitad_ancho ))
+#YY=$(( $monitor_alto / 2 - $menu_alto_pixeles ))
+
 getmount() { \
 	[ -z "$chosen" ] && exit 1
         # shellcheck disable=SC2086
-	mp="$(find $1 2>/dev/null | dmenu -i -p "Escriba punto de montaje.")" || exit 1
+	mp="$(find $1 2>/dev/null | dmenu -w $menu_ancho -x $XX -y $YY -i -p "Escriba punto de montaje.")" || exit 1
 	[ "$mp" = "" ] && exit 1
 	if [ ! -d "$mp" ]; then
-		mkdiryn=$(printf "No\\nYes" | dmenu -i -p "$mp no existe. ¿Crearlo?") || exit 1
+		mkdiryn=$(printf "No\\nYes" | dmenu -w $menu_ancho -x $XX -y $YY -i -p "$mp no existe. ¿Crearlo?") || exit 1
 		[ "$mkdiryn" = "Yes" ] && (mkdir -p "$mp" || sudo -A mkdir -p "$mp")
 	fi
 	}
 
 mountusb() { \
-	chosen="$(echo "$usbdrives" | dmenu -i -p "¿Que unidad desea montar?")" || exit 1
+	chosen="$(echo "$usbdrives" | dmenu -w $menu_ancho -x $XX -y $YY -i -p "¿Que unidad desea montar?")" || exit 1
 	chosen="$(echo "$chosen" | awk '{print $1}')"
 	sudo -A mount "$chosen" 2>/dev/null && notify-send "💻 USB Montado" "$chosen montada." && exit 0
 	alreadymounted=$(lsblk -nrpo "name,type,mountpoint" | awk '$3!~/\/boot|\/home$|SWAP/&&length($3)>1{printf "-not ( -path *%s -prune ) ",$3}')
@@ -26,17 +44,17 @@ mountusb() { \
 	}
 
 mountandroid() { \
-	chosen="$(echo "$anddrives" | dmenu -i -p "¿Qué dispositivo Android?")" || exit 1
+	chosen="$(echo "$anddrives" | dmenu -w $menu_ancho -x $XX -y $YY -i -p "¿Qué dispositivo Android?")" || exit 1
 	chosen="$(echo "$chosen" | cut -d : -f 1)"
 	getmount "$HOME -maxdepth 3 -type d"
         simple-mtpfs --device "$chosen" "$mp"
-	echo "OK" | dmenu -i -p "Tap Allow on your phone if it asks for permission and then press enter" || exit 1
+	echo "OK" | dmenu -w $menu_ancho -x $XX -y $YY -i -p "Tap Allow on your phone if it asks for permission and then press enter" || exit 1
 	simple-mtpfs --device "$chosen" "$mp"
 	notify-send "🤖 Android Montado" "Android device mounted to $mp."
 	}
 
 asktype() { \
-	choice="$(printf "USB\\nAndroid" | dmenu -i -p "¿Montar una unidad USB o un dispositivo Android?")" || exit 1
+	choice="$(printf "USB\\nAndroid" | dmenu -w 350 -x 0 -y 25 -i -p "¿Montar una unidad USB o un dispositivo Android?")" || exit 1
 	case $choice in
 		USB) mountusb ;;
 		Android) mountandroid ;;

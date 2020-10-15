@@ -1,3 +1,21 @@
 #!/bin/sh
-dmenu -bw 1 -fn SF\\Compact\\Text-10:Bold -P -p " $1 [ ⦁ ⦁ ⦁ ⦁ ⦁ ⦁ ⦁ ⦁ ⦁ ⦁ ]" <&- && echo
 
+#DEFINIR ANCHO Y NUMERO DE LINEAS HORIZONTALES
+menu_alto_lineas=10
+menu_ancho=400
+#MEDIDAS DE MONITOR NO TOCAR
+monitor_ancho=$(xrandr | awk '/*/ {print $1}' | cut -c 1-4)
+monitor_alto=$(xrandr | awk '/*/ {print $1}' | cut -c 6-9)
+#ALINEAR A LA DERECHA ARRIBA
+#XX=$(( $monitor_ancho - $menu_ancho -5 ))
+#YY=$(( 25 ))
+#ALINEADO A LA IZQUIERA ARRIBA
+#XX=0
+#YY=25
+#ALINEADO AL CENTRO
+menu_alto_pixeles=$(( $menu_alto_lineas * 10 ))
+menu_mitad_ancho=$(( $menu_ancho / 2 ))
+XX=$(( $monitor_ancho / 2 - $menu_mitad_ancho ))
+YY=$(( $monitor_alto / 2 - $menu_alto_pixeles ))
+
+dmenu -w $menu_ancho -x $XX -y $YY -fn SF\\Compact\\Text-10:Bold -P -p " $1" <&- && echo

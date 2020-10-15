@@ -1,6 +1,24 @@
 #!/bin/sh
 
-case "$(printf "Selecione el area\\nVentana activa\\nToda la pantalla\\nSelecionar area (copiar)\\nVentana activa (copiar)\\nToda la pantalla (copiar)" | dmenu -l 6 -i -p "Selecione el tipo de captura:")" in
+#DEFINIR ANCHO Y NUMERO DE LINEAS HORIZONTALES
+menu_alto_lineas=10
+menu_ancho=350
+#MEDIDAS DE MONITOR NO TOCAR
+monitor_ancho=$(xrandr | awk '/*/ {print $1}' | cut -c 1-4)
+monitor_alto=$(xrandr | awk '/*/ {print $1}' | cut -c 6-9)
+#ALINEAR A LA DERECHA ARRIBA
+XX=$(( $monitor_ancho - $menu_ancho -5 ))
+YY=$(( 25 ))
+#ALINEADO A LA IZQUIERA ARRIBA
+#XX=0
+#YY=25
+#ALINEADO AL CENTRO
+#menu_alto_pixeles=$(( $menu_alto_lineas * 10 ))
+#menu_mitad_ancho=$(( $menu_ancho / 2 ))
+#XX=$(( $monitor_ancho / 2 - $menu_mitad_ancho ))
+#YY=$(( $monitor_alto / 2 - $menu_alto_pixeles ))
+
+case "$(printf "Selecione el area\\nVentana activa\\nToda la pantalla\\nSelecionar area (copiar)\\nVentana activa (copiar)\\nToda la pantalla (copiar)" | dmenu -w $menu_ancho -x $XX -y $YY -i -p "Selecione el tipo de captura:")" in
 	"Selecione el area") maim -m 1 -s area-seleccionada-"$(date '+%y%m%d-%H%M-%S').png" ;;
 	"Ventana activa") maim -m 1 -i "$(xdotool getactivewindow)" ventana-activa-"$(date '+%y%m%d-%H%M-%S').png" ;;
 	"Toda la pantalla") maim -m 1 captura-pantalla-"$(date '+%y%m%d-%H%M-%S').png" ;;

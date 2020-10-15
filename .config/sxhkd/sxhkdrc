@@ -10,11 +10,11 @@
 
 #Terminal/launch menu:
 super + {Return,d}
-	{st,dmenu_run}
+	{st,programas}
 
 #Menu programas facil
 super + shift + d
-	programas
+	dmenu_run -l 15 -w 300 -x 0 -y 25
 
 #Actualizar sxhkdrc:
 alt + {Escape,r}

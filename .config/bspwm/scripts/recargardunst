@@ -2,9 +2,16 @@
 
 . "${HOME}/.cache/wal/colors.sh"
 
+ancho_notificacion=350
+YY=25
+mitad_ancho_notificacion=$(($ancho_notificacion / 2 ))
+monitor_ancho=$(xrandr | awk '/*/ {print $1}' | cut -c 1-4)
+XX=$(( $monitor_ancho / 2 - $mitad_ancho_notificacion ))
+
  reload_dunst() {
     pkill dunst
     dunst \
+    -geom 350x5-$XX+$YY \
 	-frame_width 3 \
         -frame_color "${color2}" \
         -lf "${color7}" \
