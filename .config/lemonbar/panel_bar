@@ -1,5 +1,5 @@
 #!/bin/bash
-. "${HOME}/.cache/wal/colors.sh"
+. ${HOME}/.cache/wal/colors.sh
 
 # ██████╗  █████╗ ███╗   ██╗███████╗██╗         ██████╗  █████╗ ██████╗ 
 # ██╔══██╗██╔══██╗████╗  ██║██╔════╝██║         ██╔══██╗██╔══██╗██╔══██╗
@@ -32,7 +32,7 @@ while read -r line ; do
 			then
 			icono_redes="%{F$color2}%{A:st -e nmtui:}%{F$color7} Red%{A}"
 						else
-			icono_redes="%{F$color2}%{A:st -e nmtui:}%{F$color7} Red%{A}"
+			icono_redes="%{F$color2}%{A:st -e nmtui:}%{F$color7}%{A}"
 			fi
 			;;
 		VI*)

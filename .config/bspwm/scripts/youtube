@@ -26,7 +26,7 @@ helperPath=`dirname "$0"`
 
 #Function for getting arguments for the downloader
 providearguments(){
-	arguments=`echo -e 'Si\nNo' |dmenu -w $menu_ancho -x $XX -y $YY -i -fn 'sf compact text:bold:size=9' -p "Ya tenemos el formato. Desea descargar?"`
+	arguments=`echo -e 'Si\nNo' |dmenu -l $menu_alto_lineas -w $menu_ancho -x $XX -y $YY -i -fn 'sf compact text:bold:size=9' -p "Ya tenemos el formato. Desea descargar?"`
 	[[ $arguments = "" ]] && exit 0
 }
 

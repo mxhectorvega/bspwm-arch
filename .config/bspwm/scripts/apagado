@@ -31,7 +31,7 @@ cmds="\
          Reinciar PC	${reb}
          Apagar PC	${shut}"
 
-choice="$(echo "$cmds" | cut -d'	' -f 1 | dmenu -w $menu_ancho -x $XX -y $YY)" || exit 1
+choice="$(echo "$cmds" | cut -d'	' -f 1 | dmenu -l $menu_alto_lineas -w $menu_ancho -x $XX -y $YY)" || exit 1
 
 action=$(echo "$cmds" | grep "^$choice	" | cut -d '	' -f2)
 

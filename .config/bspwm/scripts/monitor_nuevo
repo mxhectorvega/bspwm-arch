@@ -37,7 +37,7 @@ function choose_output {
 		MESSAGE="$MESSAGE (no primario)"
 	fi
 
-	OUTPUTS=$(echo "$OUTPUTS" | awk '{print $(1)}' | dmenu -w $menu_ancho -x $XX -y $YY -i -p "$MESSAGE")
+	OUTPUTS=$(echo "$OUTPUTS" | awk '{print $(1)}' | dmenu -l $menu_alto_lineas -w $menu_ancho -x $XX -y $YY -i -p "$MESSAGE")
 	echo "$OUTPUTS"
 }
 

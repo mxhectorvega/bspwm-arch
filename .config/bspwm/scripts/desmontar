@@ -21,20 +21,20 @@ YY=$(( 25 ))
 
 unmountusb() {
 	[ -z "$drives" ] && exit
-	chosen="$(echo "$drives" | dmenu -w $menu_ancho -x $XX -y $YY -i -p "¿Que unidad desea desmontar?")" || exit 1
+	chosen="$(echo "$drives" | dmenu -l $menu_alto_lineas -w $menu_ancho -x $XX -y $YY -i -p "¿Que unidad desea desmontar?")" || exit 1
 	chosen="$(echo "$chosen" | awk '{print $1}')"
 	[ -z "$chosen" ] && exit
 	sudo -A umount "$chosen" && notify-send "💻 USB desmontando" "$chosen desmontado."
 	}
 
 unmountandroid() { \
-	chosen="$(awk '/simple-mtpfs/ {print $2}' /etc/mtab | dmenu -w $menu_ancho -x $XX -y $YY -i -p "¿Que dispositivo desea desmontar?")" || exit 1
+	chosen="$(awk '/simple-mtpfs/ {print $2}' /etc/mtab | dmenu -l $menu_alto_lineas -w $menu_ancho -x $XX -y $YY -i -p "¿Que dispositivo desea desmontar?")" || exit 1
 	[ -z "$chosen" ] && exit
 	sudo -A umount -l "$chosen" && notify-send "🤖 Desmontaje de Android" "$chosen desmontada."
 	}
 
 asktype() { \
-	choice="$(printf "USB\\nAndroid" | dmenu -w $menu_ancho -x $XX -y $YY -i -p "¿Desmontar una unidad USB o un dispositivo Android?")" || exit 1
+	choice="$(printf "USB\\nAndroid" | dmenu -l $menu_alto_lineas -w $menu_ancho -x $XX -y $YY -i -p "¿Desmontar una unidad USB o un dispositivo Android?")" || exit 1
 	case "$choice" in
 		USB) unmountusb ;;
 		Android) unmountandroid ;;

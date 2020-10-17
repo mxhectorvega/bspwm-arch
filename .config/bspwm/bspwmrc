@@ -10,11 +10,9 @@
 
 #_______________CONFIGURACION DE 1 Y 2 MONITORES_____________
 
-#bspc monitor -d 1 2 3 4 5 6 7 8 9
-#bspc monitor -d • • • • • • • • • •
 bspc monitor -d I II III IV V VI VII VIII IX X
-#bspc monitor LVDS1 -d 6 7 8 9
-#bspc monitor HDMI3 -d 1 2 3 4 5
+#bspc monitor LVDS1 -d I II III IV V
+#bspc monitor HDMI3 -d VI VII VIII IX X
 
 #___________________BORDES, COLORES Y REGLAS_________________
 
@@ -73,6 +71,7 @@ pkill -9 panel
 xset b off &
 unclutter &
 #xcompmgr &
+devmon &
 picom &
 panel &
 sxhkd &

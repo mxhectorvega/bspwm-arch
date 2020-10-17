@@ -7,11 +7,11 @@ menu_ancho=350
 monitor_ancho=$(xrandr | awk '/*/ {print $1}' | cut -c 1-4)
 monitor_alto=$(xrandr | awk '/*/ {print $1}' | cut -c 6-9)
 #ALINEAR A LA DERECHA ARRIBA
-XX=$(( $monitor_ancho - $menu_ancho -0 ))
-YY=$(( 25 ))
+#XX=$(( $monitor_ancho - $menu_ancho -0 ))
+#YY=$(( 25 ))
 #ALINEADO A LA IZQUIERA ARRIBA
-#XX=0
-#YY=25
+XX=0
+YY=25
 #ALINEADO AL CENTRO
 #menu_alto_pixeles=$(( $menu_alto_lineas * 10 ))
 #menu_mitad_ancho=$(( $menu_ancho / 2 ))
@@ -19,7 +19,7 @@ YY=$(( 25 ))
 #YY=$(( $monitor_alto / 2 - $menu_alto_pixeles ))
 
 prompt() { \
-  choice=$(printf "Screencast\nSolo video\nSolo audio\nWebcam flotante\nGrabar webcam\nDetener grabacion" |dmenu -w $menu_ancho -x $XX -y $YY -p "Seleccionar el tipo de grabacion: ")
+  choice=$(printf "Screencast\nSolo video\nSolo audio\nWebcam flotante\nGrabar webcam\nDetener grabacion" |dmenu -l $menu_alto_lineas -w $menu_ancho -x $XX -y $YY -p "Seleccionar el tipo de grabacion: ")
   case $choice in 
     "Screencast") screencast;;
     "Solo video") video;;

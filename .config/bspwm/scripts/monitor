@@ -20,11 +20,11 @@ YY=$(( 25 ))
 
 twoscreen() { # If multi-monitor is selected and there are two screens.
 
-    mirror=$(printf "no\\nyes" | dmenu -w $menu_ancho -x $XX -y $YY -i -p "Duplicar pantalla?")
+    mirror=$(printf "no\\nyes" | dmenu -l $menu_alto_lineas -w $menu_ancho -x $XX -y $YY -i -p "Duplicar pantalla?")
     # Mirror displays using native resolution of external display and a scaled
     # version for the internal display
     if [ "$mirror" = "yes" ]; then
-        external=$(echo "$screens" | dmenu -w $menu_ancho -x $XX -y $YY -i -p "Optimizar la resolucion para:")
+        external=$(echo "$screens" | dmenu -l $menu_alto_lineas -w $menu_ancho -x $XX -y $YY -i -p "Optimizar la resolucion para:")
         internal=$(echo "$screens" | grep -v "$external")
 
         res_external=$(xrandr --query | sed -n "/^$external/,/\+/p" | \
@@ -45,18 +45,18 @@ twoscreen() { # If multi-monitor is selected and there are two screens.
             --scale "$scale_x"x"$scale_y"
     else
 
-        primary=$(echo "$screens" | dmenu -w $menu_ancho -x $XX -y $YY -i -p "Seleccionar monitor principal:")
+        primary=$(echo "$screens" | dmenu -l $menu_alto_lineas -w $menu_ancho -x $XX -y $YY -i -p "Seleccionar monitor principal:")
         secondary=$(echo "$screens" | grep -v "$primary")
-        direction=$(printf "left\\nright" | dmenu -w $menu_ancho -x $XX -y $YY -i -p "De que lado estara $primary de $secondary?")
+        direction=$(printf "left\\nright" | dmenu -l $menu_alto_lineas -w $menu_ancho -x $XX -y $YY -i -p "De que lado estara $primary de $secondary?")
         xrandr --output "$primary" --auto --scale 1.0x1.0 --output "$secondary" --"$direction"-of "$primary" --auto --scale 1.0x1.0
     fi
     }
 
 morescreen() { # If multi-monitor is selected and there are more than two screens.
-    primary=$(echo "$screens" | dmenu -w $menu_ancho -x $XX -y $YY -i -p "Selecionar monitor principal:")
-    secondary=$(echo "$screens" | grep -v "$primary" | dmenu -w $menu_ancho -x $XX -y $YY -i -p "Seleccionar monitor secundario:")
-    direction=$(printf "left\\nright" | dmenu -w $menu_ancho -x $XX -y $YY -i -p "De que lado estara $primary de $secondary?")
-    tertiary=$(echo "$screens" | grep -v "$primary" | grep -v "$secondary" | dmenu -w $menu_ancho -x $XX -y $YY -i -p "Seleccionar tercer monitor:")
+    primary=$(echo "$screens" | dmenu -l $menu_alto_lineas -w $menu_ancho -x $XX -y $YY -i -p "Selecionar monitor principal:")
+    secondary=$(echo "$screens" | grep -v "$primary" | dmenu -l $menu_alto_lineas -w $menu_ancho -x $XX -y $YY -i -p "Seleccionar monitor secundario:")
+    direction=$(printf "left\\nright" | dmenu -l $menu_alto_lineas -w $menu_ancho -x $XX -y $YY -i -p "De que lado estara $primary de $secondary?")
+    tertiary=$(echo "$screens" | grep -v "$primary" | grep -v "$secondary" | dmenu -l $menu_alto_lineas -w $menu_ancho -x $XX -y $YY -i -p "Seleccionar tercer monitor:")
     xrandr --output "$primary" --auto --output "$secondary" --"$direction"-of "$primary" --auto --output "$tertiary" --"$(printf "left\\nright" | grep -v "$direction")"-of "$primary" --auto
     }
 
@@ -86,7 +86,7 @@ screens=$(echo "$allposs" | awk '/ connected/ {print $1}')
     { onescreen "$screens"; postrun; notify-send "💻 Solo se detecto un monitor." "Esta usando la mejor configuracion...";  exit ;}
 
 # Get user choice including multi-monitor and manual selection:
-chosen=$(printf "%s\\nmulti-monitor\\nmanual selection" "$screens" | dmenu -w $menu_ancho -x $XX -y $YY -i -p "Selecciona una configuracion de pantalla:") &&
+chosen=$(printf "%s\\nmulti-monitor\\nmanual selection" "$screens" | dmenu -l $menu_alto_lineas -w $menu_ancho -x $XX -y $YY -i -p "Selecciona una configuracion de pantalla:") &&
 case "$chosen" in
     "manual selection") arandr ; exit ;;
     "multi-monitor") multimon ;;

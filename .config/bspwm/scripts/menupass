@@ -18,4 +18,4 @@ menu_mitad_ancho=$(( $menu_ancho / 2 ))
 XX=$(( $monitor_ancho / 2 - $menu_mitad_ancho ))
 YY=$(( $monitor_alto / 2 - $menu_alto_pixeles ))
 
-dmenu -w $menu_ancho -x $XX -y $YY -fn SF\\Compact\\Text-10:Bold -P -p " $1" <&- && echo
+dmenu -l $menu_alto_lineas -w $menu_ancho -x $XX -y $YY -fn SF\\Compact\\Text-10:Bold -P -p " $1" <&- && echo

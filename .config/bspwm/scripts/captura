@@ -18,7 +18,7 @@ YY=$(( 25 ))
 #XX=$(( $monitor_ancho / 2 - $menu_mitad_ancho ))
 #YY=$(( $monitor_alto / 2 - $menu_alto_pixeles ))
 
-case "$(printf "Selecione el area\\nVentana activa\\nToda la pantalla\\nSelecionar area (copiar)\\nVentana activa (copiar)\\nToda la pantalla (copiar)" | dmenu -w $menu_ancho -x $XX -y $YY -i -p "Selecione el tipo de captura:")" in
+case "$(printf "Selecione el area\\nVentana activa\\nToda la pantalla\\nSelecionar area (copiar)\\nVentana activa (copiar)\\nToda la pantalla (copiar)" | dmenu -l $menu_alto_lineas -w $menu_ancho -x $XX -y $YY -i -p "Selecione el tipo de captura:")" in
 	"Selecione el area") maim -m 1 -s area-seleccionada-"$(date '+%y%m%d-%H%M-%S').png" ;;
 	"Ventana activa") maim -m 1 -i "$(xdotool getactivewindow)" ventana-activa-"$(date '+%y%m%d-%H%M-%S').png" ;;
 	"Toda la pantalla") maim -m 1 captura-pantalla-"$(date '+%y%m%d-%H%M-%S').png" ;;

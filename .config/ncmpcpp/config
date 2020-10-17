@@ -2,13 +2,13 @@
 mpd_music_dir = "/media/Datos/Musica"
 
 # Visulizacion principal
-song_list_format = " $3%n $1• $8%y $1• $5%b $8%t $R$0%A $1• $2%l"
+song_list_format = " $3%n $5- $8%y $5- $5%b $8%t $R$0%A $5- $2%l"
 song_columns_list_format = "(3)[]{}(92)[white]{t} (4)[red]{l}"
-song_status_format = "$b $8%a $8•$3• $3%t $3•$5• $5%b $5•$2• $2%y"
+song_status_format = "$b $8%a $8-$3- $3%t $3-$5- $5%b $5-$2- $2%y"
 playlist_display_mode = "classic" (classic/columns)
 
 # Ahora escuchando
-now_playing_prefix = "$b$2 >"
+now_playing_prefix = "$b$2 ➞"
 now_playing_suffix = "$8$/b"
 
 # Playlist
