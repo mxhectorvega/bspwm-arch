@@ -1,12 +1,13 @@
 #!/bin/sh
 
-#DEFINIR ANCHO Y NUMERO DE LINEAS
-menu_alto_lineas=10
+#DEFINIR ANCHO Y NUMERO DE LINEAS HORIZONTALES
+menu_alto_lineas=12
 menu_ancho=400
-monitor_ancho=$(xrandr | awk '/*/ {print $1}' | cut -c 1-4)
-monitor_alto=$(xrandr | awk '/*/ {print $1}' | cut -c 6-9)
+#MEDIDAS DE MONITOR NO TOCAR
+monitor_ancho=$(cat /tmp/resoluciones | awk 'NR==2 {print}')
+monitor_alto=$(cat /tmp/resoluciones | awk 'NR==3 {print}')
 #ALINEAR A LA DERECHA ARRIBA
-XX=$(( $monitor_ancho - $menu_ancho -0 ))
+XX=$(( $monitor_ancho - $menu_ancho - 2 ))
 YY=$(( 25 ))
 #ALINEADO A LA IZQUIERA ARRIBA
 #XX=0
@@ -17,80 +18,186 @@ YY=$(( 25 ))
 #XX=$(( $monitor_ancho / 2 - $menu_mitad_ancho ))
 #YY=$(( $monitor_alto / 2 - $menu_alto_pixeles ))
 
+PRIMARY=$(xrandr | grep -w  primary |  awk '{print $(1)}')
 
-twoscreen() { # If multi-monitor is selected and there are two screens.
-
-    mirror=$(printf "no\\nyes" | dmenu -l $menu_alto_lineas -w $menu_ancho -x $XX -y $YY -i -p "Duplicar pantalla?")
-    # Mirror displays using native resolution of external display and a scaled
-    # version for the internal display
-    if [ "$mirror" = "yes" ]; then
-        external=$(echo "$screens" | dmenu -l $menu_alto_lineas -w $menu_ancho -x $XX -y $YY -i -p "Optimizar la resolucion para:")
-        internal=$(echo "$screens" | grep -v "$external")
-
-        res_external=$(xrandr --query | sed -n "/^$external/,/\+/p" | \
-            tail -n 1 | awk '{print $1}')
-        res_internal=$(xrandr --query | sed -n "/^$internal/,/\+/p" | \
-            tail -n 1 | awk '{print $1}')
-
-        res_ext_x=$(echo "$res_external" | sed 's/x.*//')
-        res_ext_y=$(echo "$res_external" | sed 's/.*x//')
-        res_int_x=$(echo "$res_internal" | sed 's/x.*//')
-        res_int_y=$(echo "$res_internal" | sed 's/.*x//')
-
-        scale_x=$(echo "$res_ext_x / $res_int_x" | bc -l)
-        scale_y=$(echo "$res_ext_y / $res_int_y" | bc -l)
-
-        xrandr --output "$external" --auto --scale 1.0x1.0 \
-            --output "$internal" --auto --same-as "$external" \
-            --scale "$scale_x"x"$scale_y"
-    else
-
-        primary=$(echo "$screens" | dmenu -l $menu_alto_lineas -w $menu_ancho -x $XX -y $YY -i -p "Seleccionar monitor principal:")
-        secondary=$(echo "$screens" | grep -v "$primary")
-        direction=$(printf "left\\nright" | dmenu -l $menu_alto_lineas -w $menu_ancho -x $XX -y $YY -i -p "De que lado estara $primary de $secondary?")
-        xrandr --output "$primary" --auto --scale 1.0x1.0 --output "$secondary" --"$direction"-of "$primary" --auto --scale 1.0x1.0
-    fi
-    }
-
-morescreen() { # If multi-monitor is selected and there are more than two screens.
-    primary=$(echo "$screens" | dmenu -l $menu_alto_lineas -w $menu_ancho -x $XX -y $YY -i -p "Selecionar monitor principal:")
-    secondary=$(echo "$screens" | grep -v "$primary" | dmenu -l $menu_alto_lineas -w $menu_ancho -x $XX -y $YY -i -p "Seleccionar monitor secundario:")
-    direction=$(printf "left\\nright" | dmenu -l $menu_alto_lineas -w $menu_ancho -x $XX -y $YY -i -p "De que lado estara $primary de $secondary?")
-    tertiary=$(echo "$screens" | grep -v "$primary" | grep -v "$secondary" | dmenu -l $menu_alto_lineas -w $menu_ancho -x $XX -y $YY -i -p "Seleccionar tercer monitor:")
-    xrandr --output "$primary" --auto --output "$secondary" --"$direction"-of "$primary" --auto --output "$tertiary" --"$(printf "left\\nright" | grep -v "$direction")"-of "$primary" --auto
-    }
-
-multimon() { # Multi-monitor handler.
-    case "$(echo "$screens" | wc -l)" in
-        2) twoscreen ;;
-        *) morescreen ;;
-    esac ;}
-
-onescreen() { # If only one output available or chosen.
-    xrandr --output "$1" --auto --scale 1.0x1.0 $(echo "$allposs" | grep -v "$1" | awk '{print "--output", $1, "--off"}' | paste -sd ' ')
-    }
-
-postrun() { # Stuff to run to clean up.
-    fondo       # Fix background if screen size/arangement has changed.
+function post_run {
+    fondo
     { killall dunst ; setsid -f dunst ;} >/dev/null 2>&1 # Restart dunst to ensure proper location on screen
-    }
+}
 
-# Get all possible displays
-allposs=$(xrandr -q | grep "connected")
+function choose_output {
 
-# Get all connected screens.
-screens=$(echo "$allposs" | awk '/ connected/ {print $1}')
+	OUTPUTS=$(xrandr | grep -w  connected ) 
+	MESSAGE="Monitores conectados"
 
-# If there's only one screen
-[ "$(echo "$screens" | wc -l)" -lt 2 ] &&
-    { onescreen "$screens"; postrun; notify-send "💻 Solo se detecto un monitor." "Esta usando la mejor configuracion...";  exit ;}
+	if [ "$1" == "-a" ] ||  [ "$2" == "-a" ]
+	then
+		OUTPUTS=$(echo "$OUTPUTS" | grep --extended-regexp "connected\s(primary\s)?[0-9]+x[0-9]+") 
+		MESSAGE="Monitores activos"
+	fi
 
-# Get user choice including multi-monitor and manual selection:
-chosen=$(printf "%s\\nmulti-monitor\\nmanual selection" "$screens" | dmenu -l $menu_alto_lineas -w $menu_ancho -x $XX -y $YY -i -p "Selecciona una configuracion de pantalla:") &&
-case "$chosen" in
-    "manual selection") arandr ; exit ;;
-    "multi-monitor") multimon ;;
-    *) onescreen "$chosen" ;;
+	if [ "$1" == "-p" ] ||  [ "$2" == "-p" ]
+	then
+		OUTPUTS=$(echo "$OUTPUTS" | grep -v -w primary) 
+		MESSAGE="$MESSAGE (no primario)"
+	fi
+
+	OUTPUTS=$(echo "$OUTPUTS" | awk '{print $(1)}' | dmenu -l $menu_alto_lineas -w $menu_ancho -x $XX -y $YY -i -p "$MESSAGE")
+	echo "$OUTPUTS"
+}
+
+function change_res {
+
+	RES=$(xrandr | awk '/'"$1"'/{f=1;next} /[A-Z]/{f=0} f' |  awk '{print $(1)}' | dmenu -l $menu_alto_lineas -w $menu_ancho -x $XX -y $YY -i -p "Cambiar resolucion")
+echo $RES
+	if [ ! -z "$RES" ]
+	then
+		xrandr --output "$1" --mode "$RES"
+		post_run
+	fi
+}
+
+function disconnect {
+
+	xrandr --output $1 --off
+	CONNECTED=$(xrandr | grep --extended-regexp  "connected\s[0-9]+x[0-9]+")
+
+	if [ -z "$CONNECTED" ]
+	then
+        	xrandr --output $PRIMARY --auto
+	fi
+	post_run
+
+}
+
+function mirror {
+
+	xrandr --output "$1" --off
+	RESOLUTION=$(xrandr | grep -P "(?<=connected\sprimary\s)[0-9]+x[0-9]+"|  awk '{print $(4)}')
+	xrandr  --output "$1" --auto --same-as "$PRIMARY" --scale-from $RESOLUTION
+	post_run
+}
+
+function single_monitor {
+
+	xrandr --output $1 --off
+	CONNECTED=$(xrandr | grep -P "connected(\sprimary)?\s[0-9]+x[0-9]+"|  awk '{print $(1)}' | head -n 1)
+
+	while [ -n "$CONNECTED" ]
+	do
+		xrandr --output $CONNECTED --off 
+		CONNECTED=$(xrandr | grep -P "connected(\sprimary)?\s[0-9]+x[0-9]+"|  awk '{print $(1)}' | head -n 1)
+	done
+
+	xrandr --output $1 --primary --auto
+	post_run
+}
+
+function extend {
+
+	POSITION=$(echo -e "Derecha\nIzquierda\nArriba\nAbajo" | dmenu -l $menu_alto_lineas -w $menu_ancho -x $XX -y $YY -i -p "Posicion")
+	xrandr --output "$1" --off
+
+	case "$POSITION" in
+
+	        "Derecha")
+			xrandr --output "$PRIMARY" --primary --auto --output "$1"     --right-of "$PRIMARY" --auto
+	                ;;
+	        "Izquierda") 
+			xrandr --output "$PRIMARY" --primary --auto --output "$1"     --left-of "$PRIMARY" --auto
+	                ;;
+	        "Arriba") 
+			xrandr --output "$PRIMARY" --primary --auto --output "$1"     --above "$PRIMARY" --auto
+	                ;;
+	        "Abajo") 
+			xrandr --output "$PRIMARY" --primary --auto --output "$1"     --below "$PRIMARY" --auto
+	                ;;
+		*) exit
+			;;
+	esac
+	post_run
+}
+
+function rotate {
+
+	ROTATION=$(echo -e "left\nright\nnormal\ninverted" | dmenu -l $menu_alto_lineas -w $menu_ancho -x $XX -y $YY -i -p "Rotacion:")
+
+	xrandr --output "$1" --rotate "$ROTATION" 
+	xrandr --output "$1" --auto 
+	post_run
+}
+ 
+CHOOSEN=$(echo -e "Conectar monitor\nDesconectar monitor externo\nRotar monitor\nCambiar resolution" | dmenu -l $menu_alto_lineas -w $menu_ancho -x $XX -y $YY -l 4 -i -p "Selecione una configuracion")
+
+case "$CHOOSEN" in
+	"Conectar monitor") 
+
+		OUTPUT=$(choose_output -p)
+
+		if [ -z "$OUTPUT" ]
+		then
+       			exit
+		fi
+		;;
+
+	"Desconectar monitor externo")
+
+		OUTPUT=$(choose_output -a -p)
+
+		if [ -z "$OUTPUT" ]
+		then
+		        exit
+		fi
+
+		disconnect "$OUTPUT"
+		exit
+		;;
+
+
+	"Rotar monitor") 
+
+		OUTPUT=$(choose_output -a)
+
+		if [ -z "$OUTPUT" ]
+		then
+		        exit
+		fi
+
+		rotate "$OUTPUT"
+		exit
+		;;
+		
+	"Cambiar resolution") 
+
+		OUTPUT=$(choose_output -a)
+
+		if [ -z "$OUTPUT" ]
+		then
+		        exit
+		fi
+
+		change_res "$OUTPUT"
+		exit
+		;;
+
+	*) exit
+		;;
+
 esac
 
-postrun
+CHOOSEN=$(echo -e "Duplicar\nModo extendido\nMonitor unico" | dmenu -l $menu_alto_lineas -w $menu_ancho -x $XX -y $YY -i -p "Elige un modo:")
+
+case "$CHOOSEN" in 
+	"Duplicar") mirror "$OUTPUT"
+		;;
+
+	"Modo extendido") extend "$OUTPUT"
+		;;
+
+	"Monitor unico") single_monitor "$OUTPUT"
+		;;
+
+	*) exit
+		;;
+
+esac

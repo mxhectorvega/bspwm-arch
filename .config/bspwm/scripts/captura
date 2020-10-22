@@ -4,10 +4,10 @@
 menu_alto_lineas=10
 menu_ancho=350
 #MEDIDAS DE MONITOR NO TOCAR
-monitor_ancho=$(xrandr | awk '/*/ {print $1}' | cut -c 1-4)
-monitor_alto=$(xrandr | awk '/*/ {print $1}' | cut -c 6-9)
+monitor_ancho=$(cat /tmp/resoluciones | awk 'NR==2 {print}')
+monitor_alto=$(cat /tmp/resoluciones | awk 'NR==3 {print}')
 #ALINEAR A LA DERECHA ARRIBA
-XX=$(( $monitor_ancho - $menu_ancho -0 ))
+XX=$(( $monitor_ancho - $menu_ancho - 2 ))
 YY=$(( 25 ))
 #ALINEADO A LA IZQUIERA ARRIBA
 #XX=0

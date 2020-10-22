@@ -1,0 +1,34 @@
+#!/bin/sh
+
+monitor0=$(xrandr | awk '/*/{print $1}' | sed -n 1p)
+monitor1=$(xrandr | awk '/*/{print $1}' | sed -n 2p)
+
+if [ ! -z $monitor0 ]
+then
+IFS=x read width0 height0 <<< $monitor0
+# echo "MONITOR 0"
+# echo "El ancho es" $width0
+# echo "El alto es" $height0
+monitor0=$(xrandr --listactivemonitors | grep "0:")
+fi
+
+if [ ! -z $monitor1 ]
+then
+IFS=x read width1 height1 <<< $monitor1
+# echo "MONITOR 1"
+# echo "El ancho es" $width1
+# echo "El alto es" $height1
+monitor1=$(xrandr --listactivemonitors | grep "1:")
+fi
+
+if [[ $monitor0 =~ "+$width1+" ]]
+then
+echo "La resolucion del monitor primario es:"
+echo $width1
+echo $height1
+
+else
+echo "La resolucion del monitor primario es:"
+echo $width0
+echo $height0
+fi

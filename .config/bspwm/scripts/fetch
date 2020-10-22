@@ -6,7 +6,7 @@
 
 # user is already defined
 host="$(cat /etc/hostname)"
-os='Arch Linux'
+os="Arch Linux"
 kernel="$(uname -sr)"
 uptime="$(uptime -p | sed 's/up //')"
 packages="$(pacman -Q | wc -l)"

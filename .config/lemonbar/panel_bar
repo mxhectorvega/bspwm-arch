@@ -25,16 +25,22 @@ while read -r line ; do
 			;;
 		N*)
 			# CONEXIONES        
-			if [ ${line#??} = wlan0 ]
-			then
-			icono_redes="%{F$color2}%{A:st -e nmtui:}%{A}"
-			elif [ ${line#??} = enp0s25 ]
-			then
-			icono_redes="%{F$color2}%{A:st -e nmtui:}%{F$color7} Red%{A}"
-						else
-			icono_redes="%{F$color2}%{A:st -e nmtui:}%{F$color7}%{A}"
-			fi
-			;;
+ 			if [ ${line#??} == "wlan0" ]
+ 			then
+ 			icono_red="%{F$color2}%{A:st -e nmtui:}%{A}"
+			ssid=%{F$color7}$(iwgetid -r)
+			wifi=%{F$color7}$(cat /proc/net/wireless | awk 'NR==3 {printf "%0.0f%%\n", $3/70*100}')
+ 			elif [[ ${line#??} =~ "enp0s25" ]]
+ 			then
+ 			icono_red="%{F$color2}%{A:st -e nmtui:}%{A}" 
+			ssid=%{F$color7}"Red"
+			wifi=""
+			else
+			icono_red="%{F$color2}%{A:st -e nmtui:}%{A}" 	  
+			ssid=%{F$color7}"Sin conexión"
+			wifi=""
+ 			fi
+ 			;;
 		VI*)
 			# ICONO DE VOLUMEN
 			if [ ${line#??} = on ]
@@ -98,7 +104,6 @@ while read -r line ; do
 			icono_clima="%{F$color2}%{A:setsid st -e less -Srf "/tmp/clima":}%{A}"
 #			icono_stop="%{F$color2}%{A:mpc stop:}%{A}"
 #			icono_lluvia="%{F$color2}%{A:mpc stop:}%{A}"
-#			icono_wifi="%{F$color2}%{A:st -e nmtui:}%{A}"
 #			icono_ramdom="%{F$color2}%{A:mpc ramdom:}%{A}"
 #			icono_temp_alta="%{F$color2}%{A:setsid st -e less -Srf "/tmp/clima":}%{A}"%{F$color2}"
 #			icono_temp_baja="%{F$color2}%{A:setsid st -e less -Srf "/tmp/clima":}%{A}"%{F$color2}"
@@ -112,8 +117,6 @@ while read -r line ; do
 			clima_simple="%{F$color7}$(awk '{print $2-+-c"°"}' /tmp/climasimple)"
 			microfono="%{F$color7}$(amixer get Capture | awk -F'[][]' 'END{ print $2 }')"
 			musica_mpc="%{F$color7}%{A:st -e ncmpcpp:}$(mpc current -f '[%title% - %artist%|%file%] ')%{A}"
-			wifi_nivel="%{F$color7}$(cat /proc/net/wireless | awk 'NR==3 {printf "%0.0f%%\n", $3/70*100}')"
-#			essid="%{F$color7}$(essid)"
 #			horas="%{F$color7}$(clock | awk '{print $2}')"
 #			kernel="%{F$color7}$(uname -a | awk '{ print $1" "$3" "$8 }')"
 #			uso_cpu="%{F$color7}$(top -bn1 | grep "Cpu" | awk 'NR==1 {print $2}')"
@@ -127,7 +130,7 @@ while read -r line ; do
 #			spotify_album="%{F$color7}$(dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.freedesktop.DBus.Properties.Get string:org.mpris.MediaPlayer2.Player string:Metadata | sed -nr '/xesam:album"/,+2s/^ +variant +string "(.*)"$/\1/p' | tail -1)
 #			panel_spotify="%{F$color7}${spotify_artista}${spotify_titulo}"
 			panel_mpc="${icono_mpc_anterior}  ${icono_mpc_pausa}  ${icono_mpc_siguiente}   ${musica_mpc}"
-			bandeja="${icono_clima} ${clima_simple}  ${icono_ram} ${ram_uso}  ${icono_microfono} ${microfono}  ${icono_volumen} ${volumen_porcentaje}  ${icono_brillo} ${brillo}  ${icono_temperatura} ${temp_cpu}  ${icono_cargando} ${icono_bateria} ${bateria_porcentaje}  ${icono_redes} ${wifi_nivel}  ${icono_power}  "
+			bandeja="${icono_clima} ${clima_simple}  ${icono_ram} ${ram_uso}  ${icono_microfono} ${microfono}  ${icono_volumen} ${volumen_porcentaje}  ${icono_brillo} ${brillo}  ${icono_temperatura} ${temp_cpu}  ${icono_cargando} ${icono_bateria} ${bateria_porcentaje}  ${icono_red} ${ssid} ${wifi}  ${icono_power}  "
 			;;
 		W*)
 			# BSPWM ESCRITORIOS
