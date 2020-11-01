@@ -32,7 +32,7 @@ Clonar y copiar los archivos de configuracion:
 ```
 git clone https://github.com/mxhectorvega/dotfiles
 
-cp -R ~/dotfiles/* ~/
+cp -R ~/dotfiles/.config/* ~/.config
 ```
 
 Otorgar permisos de ejecucion a los archivos:
