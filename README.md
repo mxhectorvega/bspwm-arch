@@ -30,9 +30,9 @@ git clone https://github.com/krypt-n/bar
 Clonar y copiar los archivos de configuracion:
 
 ```
-git clone https://github.com/mxhectorvega/dotfiles
+git clone https://github.com/mxhectorvega/dotfilesarchlinux
 
-cp -R ~/dotfiles/.config/* ~/.config
+cp -R ~/dotfilesarchlinux/.config/* ~/.config
 ```
 
 Otorgar permisos de ejecucion a los archivos:
