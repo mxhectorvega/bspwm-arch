@@ -3,12 +3,6 @@ Configuraciones personales
 
 BSPwm con Lemonbar personalizados e integrados con Dmenu y un par de scripts que facilitan el uso diario, sin sacrificar el rendimiento.
 
-<img src="https://raw.githubusercontent.com/mxhectorvega/mxhectorvega.github.io/master/archivos/screen3.png" />
-
-<img src="https://raw.githubusercontent.com/mxhectorvega/mxhectorvega.github.io/master/archivos/screen2.png" />
-
-<img src="https://raw.githubusercontent.com/mxhectorvega/mxhectorvega.github.io/master/archivos/screen1.png" />
-
 **Instalacion**
 
 Clonar e instalar los repositorios `make && sudo make install` a travez de la terminal.
