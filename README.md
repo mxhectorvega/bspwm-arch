@@ -7,7 +7,7 @@ BSPwm, polybar, rofi y un par de scripts que facilitan el uso diario, sin sacrif
 
 **Instalacion**
 
-Instalar BSPwm, Sxhkd y Rofi (para que funcione rofo con los temas debe instalar pywal desde yay o pip3 `yay wal-git`).
+Instalar BSPwm, Sxhkd y Rofi (para que funcione rofo con los temas debe instalar pywal desde pip3 `pip3 install pywal`).
 
 ```
 sudo pacman -S bspwm sxhkd rofi
@@ -32,7 +32,11 @@ Clonar y copiar los archivos de configuracion:
 ```
 git clone https://github.com/mxhectorvega/dotfilesarchlinux
 
-cp -R ~/dotfilesarchlinux/* ~/
+cp -R ~/dotfilesarchlinux/.config/* ~/.config
+cp -R ~/dotfilesarchlinux/.local/* ~/.local
+
+chmod + x ~/.config/bspwm/*
+chmod + x ~/.local/bin*
 ```
 
 En caso de no tener pantalla de inicio de sesion, agregar `exec bspwm` al
@@ -42,7 +46,7 @@ permisos de ejecucion con `chmod +x`).
 **Dependencias**
 
 ```
-sudo pacman -S devmon ueberzug ffmpegthumbnailer feh mpd mpc ncmpcpp slock telegram-desktop htop xarchiver neofetch leafpad ranger pcmanfm lxappearance dunst maim xclip sxiv xdotool calcurse zathura zathura-pdf-mupdf neovim mpv screenkey
+sudo pacman -S bc tmux imagemagick ueberzug ffmpegthumbnailer feh mpd mpc ncmpcpp slock telegram-desktop htop xarchiver neofetch leafpad ranger pcmanfm lxappearance dunst maim xclip sxiv xdotool calcurse zathura zathura-pdf-mupdf neovim mpv screenkey
 ```
 
 **Fuentes y temas**
@@ -57,16 +61,16 @@ sudo pacman -S materia-gtk-theme materia-kde papirus-icon-theme
 yay -S picom-ibhagwan-git
 ```
 
-**Drives de Pulseaudio (opcional)**
+**Cosas que se ven en la terminal**
 
 ```
-sudo pacman -S pulseaudio pulseaudio-alsa pulseaudio-bluetooth alsa-utils alsa-plugins
+yay -S cava-git cmatrix unimatrix pfetch tty-clock
 ```
 
 **Software de uso personal (opcional)**
 
 ```
-sudo pacman -S libreoffice-fresh-es kdenlive audacity gimp inkscape
+sudo pacman -S geany obs-studio libreoffice-fresh-es kdenlive audacity gimp inkscape
 
 yay -S spotify spotify-adblock-linux --noeditmenu --noconfirm --needed
 ```

@@ -1,5 +1,5 @@
 # MPD directorio musica
-mpd_music_dir = "/home/mxhectorvega/Música"
+mpd_music_dir = "$HOME/Backup/Projec Music"
 
 # Visulizacion principal
 song_list_format = " $3%n $5- $8%y $5- $5%b $8%t $R$0%A $5- $2%l"

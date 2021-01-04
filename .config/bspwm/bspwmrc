@@ -2,7 +2,7 @@
 
 
 # Comentar la siguiente linea en caso de no usar PYWAL.
-. $HOME/.cache/wal/colors.sh
+#. $HOME/.cache/wal/colors.sh
 
 
 # Si requiere modificar elementos del arranque, editar el archivo .local/bin/auto_arranque

@@ -6,19 +6,19 @@
 
 
 # Aqui puede agregar o quitar cosas del que inician con el gestor de ventanas.
-pkill -9 polybar &
+#pkill -9 polybar &
 pgrep -x sxhkd > /dev/null || sxhkd &
 #wal -i "$(< "$HOME/.cache/wal/wal")"
 xsetroot -cursor_name left_ptr
 xset r rate 300 50 &
-dunst_colores &
-polybar bar &
+#dunst_colores &
+#polybar bar &
 clima_datos &
 xset b off &
 unclutter &
-devmon &
-picom &
-mpd &
+#devmon &
+#picom &
+#mpd &
 
 
 # Estas son los programas predeterminados.
