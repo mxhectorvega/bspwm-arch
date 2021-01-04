@@ -1,0 +1,7 @@
+#!/bin/sh
+
+
+# Script para polybar o cualquier otra barra.
+fecha=$(date | awk '{ print $1", " $2" " $3}')
+hora=$(date | awk '{ print $5}' | cut -c 1-5)
+echo "$fecha $hora"

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+
+# Modifique su localizacion para que el clima sea acertado.
+curl -sf "wttr.in/VER?format=1" > /tmp/climasimple &
+curl -sf "wttr.in/VER?lang=es" > /tmp/clima &

@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+
+# Demonio de notificaciones MPD (musica).
+exec 3<> /dev/tcp/localhost/6600
+last="$(mpc current)"
+while read -u3 msg; do
+	if [[ "$msg" == OK* ]]; then
+		song="$(mpc current)"
+		[[ "$song" != "$last" ]] && notificacionmpc
+		last="$song"
+		echo 'idle player playlist' >&3
+	fi
+done
+

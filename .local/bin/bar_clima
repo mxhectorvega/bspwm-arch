@@ -1,0 +1,6 @@
+#!/bin/sh
+
+
+# Este script muestar en la barra un extracto del clima local
+clima=$(awk '{print $2-+-c"°"}' /tmp/climasimple)
+echo "$clima"

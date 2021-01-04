@@ -1,0 +1,70 @@
+#!/bin/sh
+
+
+# Script demodos de monitores para rofi.
+twoscreen() { # If multi-monitor is selected and there are two screens.
+
+    mirror=$(printf "no\\nyes" | rofi -dmenu -lines 4 -p "Duplicar pantalla?")
+    # Mirror displays using native resolution of external display and a scaled
+    # version for the internal display
+    if [ "$mirror" = "yes" ]; then
+        external=$(echo "$screens" | rofi -dmenu -lines 4 -p "Optimizar resolucion a")
+        internal=$(echo "$screens" | grep -v "$external")
+
+        res_external=$(xrandr --query | sed -n "/^$external/,/\+/p" | \
+            tail -n 1 | awk '{print $1}')
+        res_internal=$(xrandr --query | sed -n "/^$internal/,/\+/p" | \
+            tail -n 1 | awk '{print $1}')
+
+        res_ext_x=$(echo $res_external | sed 's/x.*//')
+        res_ext_y=$(echo $res_external | sed 's/.*x//')
+        res_int_x=$(echo $res_internal | sed 's/x.*//')
+        res_int_y=$(echo $res_internal | sed 's/.*x//')
+
+        scale_x=$(echo "$res_ext_x / $res_int_x" | bc -l)
+        scale_y=$(echo "$res_ext_y / $res_int_y" | bc -l)
+
+        xrandr --output "$external" --auto --scale 1.0x1.0 \
+            --output "$internal" --auto --same-as "$external" \
+            --scale "$scale_x"x"$scale_y"
+    else
+
+        primary=$(echo "$screens" | rofi -dmenu -lines 4 -p "Seleccionar monitor primario")
+        secondary=$(echo "$screens" | grep -v "$primary")
+        direction=$(printf "left\\nright" | rofi -dmenu -lines 4 -p "Donde estara $primary de $secondary ?")
+        xrandr --output "$primary" --auto --scale 1.0x1.0 --output "$secondary" --"$direction"-of "$primary" --auto --scale 1.0x1.0
+    fi
+    }
+
+morescreen() { # If multi-monitor is selected and there are more than two screens.
+	primary=$(echo "$screens" | rofi -dmenu -lines 4 -p "Seleccionar monitor primario")
+	secondary=$(echo "$screens" | grep -v "$primary" | rofi -dmenu -lines 4 -p "Seleccionar monitor secundario")
+	direction=$(printf "left\\nright" | rofi -dmenu -lines 4 -p "Donde estara $primary de $secondary ?")
+	tertiary=$(echo "$screens" | grep -v "$primary" | grep -v "$secondary" | rofi -dmenu -lines 4 -p "Seleccionar monitor secundario")
+	xrandr --output "$primary" --auto --output "$secondary" --"$direction"-of "$primary" --auto --output "$tertiary" --"$(printf "left\\nright" | grep -v "$direction")"-of "$primary" --auto
+	}
+
+multimon() { # Multi-monitor handler.
+	case "$(echo "$screens" | wc -l)" in
+		1) xrandr $(echo "$allposs" | grep -v "$screens" | awk '{print "--output", $1, "--off"}' | tr '\n' ' ') ;;
+		2) twoscreen ;;
+		*) morescreen ;;
+	esac ;}
+
+# Get all possible displays
+allposs=$(xrandr -q | grep "connected")
+
+# Get all connected screens.
+screens=$(echo "$allposs" | grep " connected" | awk '{print $1}')
+
+# Get user choice including multi-monitor and manual selection:
+chosen=$(printf "%s\\nVarias pantallas\\nSeleccion manual (Arandr)" "$screens" | rofi -dmenu -lines 4 -p "     Monitor o modo de visualizacion") &&
+case "$chosen" in
+	"Seleccion manual (Arandr)") arandr ; exit ;;
+	"Varias pantallas") multimon ;;
+	*) xrandr --output "$chosen" --auto --scale 1.0x1.0 $(echo "$allposs" | grep -v "$chosen" | awk '{print "--output", $1, "--off"}' | tr '\n' ' ') ;;
+esac
+
+fondo		# Fix background if screen size/arangement has changed.
+
+pgrep -x dunst >/dev/null && killall dunst && setsid dunst & # Restart dunst to ensure proper location on screen

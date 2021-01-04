@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+
+# script para modificar los colores de sus notificaciones segun PYWAL.
+. "${HOME}/.cache/wal/colors.sh"
+  reload_dunst() {
+    pkill dunst
+    dunst \
+    	-geom 350x5-0+27 \
+ 	-frame_width 1 \
+        -frame_color "${color2}" \
+        -lf "${color7}" \
+        -bf "${color7}" \
+        -cf "${color7}" \
+        -nf "${color7}" &
+}
+reload_dunst
+

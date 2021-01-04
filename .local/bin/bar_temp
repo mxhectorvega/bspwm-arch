@@ -1,0 +1,6 @@
+#!/bin/sh
+
+
+# Script para polybar o cualquier otra barra.
+temp=$(sensors | grep CPUTIN | awk '{print $2}' | cut -c 2-5)
+echo $temp°

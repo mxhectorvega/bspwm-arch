@@ -1,0 +1,204 @@
+
+
+#Configuracion de atajos del teclado para que el usuario pueda acceder a sus apps y pueda hacer diversas cosas con su gestor de ventanas, sin tocar mucho el mouse, modifique para dejarlos al toque.
+
+# Menu rofi
+super + {_,shift +} d
+	{rofi -modi drun -show drun -width 22,menu_pass rofi_root}
+
+# Terminal
+super + {_,shift +} Return
+	{st,st -e tmux} 
+
+# Menu / Apagado / Reboot / Recargar / Bloquear
+super + BackSpace
+	menu_apagado
+
+# Cerrar ventana
+super + q
+	bspc node -{c,k}
+
+# Recargar por defecto
+super + alt {r,e}
+	{bspc wm -r,pkill -USR1 -x sxhkd}
+
+# ranger / ranger root
+super + {_,shift +} e
+	{pcmanfm,sudo -A pcmanfm}
+
+# Pcmanfm/pcmanfm root
+super + {_,shift +} r
+	{st -e ranger,sudo -A st -e ranger} 
+
+# Browser
+super + w
+	google-chrome-unstable
+
+# Pavucontrol
+super + c
+	pavucontrol
+
+# Neovim
+super + n
+	st -e nvim
+
+# Musica ncmpcpp o Spotify (descomentar #)
+super + m
+
+# env LD_PRELOAD=/usr/lib/spotify-adblock.so spotify %U
+	st -e ncmpcpp
+
+# Leafpad
+super + l
+	leafpad
+
+# Telegram
+super + t
+	telegram-desktop
+
+# Htop
+super + h
+	st -e htop
+
+# Qemu the best VM
+super + v
+	virt-manager
+
+# Gany
+super g
+	geany
+
+# Wifi-menu/nmtui
+super + shift + w
+	st -e nmtui
+
+# Torrent
+super + shift + t
+	transmission-gtk
+
+# rotar ventanas 90° derecha / rotar 90º izquierda / ventana flotante / fijar ventana
+super + {k,j,f,s}
+	{bspc node @focused:/ -R 90,bspc node @focused:/ -R 270,bspc node focused -t \~floating,bspc node -g sticky}
+
+# Cursor de ventanas
+super + {_,shift + }{Left,Down,Up,Right}
+	bspc node -{f,s} {west,south,north,east}
+
+# Fullscreen
+super + shift + f
+	 bspc node -t {fullscreen,tiled}
+
+# Navegar entre espacios de trabajo
+super + bracket{left,right}
+	bspc desktop -f {prev,next}.local
+
+# Volver a el area de trabajo anterior
+super + Tab
+	bspc node -f last
+
+# Enviar ventanas a otra area de trabajo
+super + {_,shift + }{1-9,0}
+	bspc {desktop -f,node -d} '^{1-9,10}'
+
+# Preseleccion para lanzar ventanas
+super + p
+	bspc node -p "~"{west,north,east,south}
+
+# Cancelar preseleccion
+super + shift + p
+	bspc node -p cancel
+
+# preselect the ratio
+super + ctrl + {1-9}
+	bspc node -o 0.{1-9}
+
+# mover ventana flotante
+super + alt + {Left,Down,Up,Right}
+	bspc node -v {-20 0,0 20,0 -20,20 0}
+
+# expander ventana
+ctrl + {Left,Down,Up,Right}
+	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+
+# contraer ventana
+ctrl + shift + {Left,Down,Up,Right}
+	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+
+# resize gaps de ventanas
+super { ,+ shift }+ z
+	bspc config window_gap $(($(bspc config window_gap) {+,-} 3))
+
+#Controlar audio con drivers ALSA con tecla Funcion
+#XF86Audio{Mute,LowerVolume,RaiseVolume}
+#	amixer -q set Master {toggle, 2%-, 2%+}
+
+# Subir,Bajar Volumen
+shift + {F3,F2, F4}
+	pactl set-sink-{volume 0 +5%,volume 0 -5%,mute 0 toggle}
+
+#Controlar volumen global Pulseaudio con tecla Funcion:
+XF86Audio{Mute,LowerVolume,RaiseVolume}
+	pactl set-sink-{mute 0 toggle,volume 0 -5%,volume 0 +5%}
+
+ctrl + shift + {F7,F8,F6,F5}
+	mpc {play,pause,next,prev}
+
+# Play/Pause Spotify
+shift + F7
+	dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
+
+# Prev Spotify
+shift + F5
+	dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous
+
+# Next Spotify
+shift + F6
+	dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next
+
+# Subir brillo
+shift + Up
+	xbacklight -inc 10
+
+#Bajar brillo
+shift + Down
+	xbacklight -dec 10
+
+# Menu de captura de pantalla
+shift + Print	
+	menu_captura
+
+# Captura de pamtalla simple
+Print
+	maim -m 1 captura-pantalla-"$(date '+%y%m%d-%H%M-%S').png"
+
+# Captura de pantalla selecionar area y copiada al portapapeles
+shift + ctrl + Print
+	maim -m 1 -s | xclip -selection clipboard -t image/png
+
+# Menu de grabacion de video
+super + Print
+	menu_grabacion
+
+# Ayuda atajos
+alt + F1
+	setsid st -e less -Srf $HOME/.config/sxhkd/sxhkdrc
+
+# Calendario
+alt + F2
+	setsid st -e calcurse
+
+# Calculadora
+alt + F3
+	setsid st -e bc -lq
+
+# Bluetooth
+alt + F4
+	blueberry
+
+# Reporte del clima local
+alt + F5
+	setsid st -e less -Srf "/tmp/clima"
+
+# Monitor
+alt + F6
+	menu_monitor

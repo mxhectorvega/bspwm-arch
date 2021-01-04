@@ -1,0 +1,6 @@
+#!/bin/sh
+
+
+# instalar dependencia backlight en otros casos no.
+brillo=$(backlight | awk '{print $4}')
+echo $brillo

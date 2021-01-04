@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+
+# Script para mostrar la paleta de colores de su sistema en la terminal
+f=3 b=4
+for j in f b; do
+  for i in {0..7}; do
+    printf -v $j$i %b "\e[${!j}${i}m"
+  done
+done
+d=$'\e[1m'
+t=$'\e[0m'
+v=$'\e[7m'
+ 
+ 
+cat << EOF
+ 
+
+   $f0████$t   $f1████$t   $f2████$t   $f3████$t   $f4████$t   $f5████$t   $f6████$t   $f7████$t  
+   $f0████$t   $f1████$t   $f2████$t   $f3████$t   $f4████$t   $f5████$t   $f6████$t   $f7████$t  
+   $f0████$t   $f1████$t   $f2████$t   $f3████$t   $f4████$t   $f5████$t   $f6████$t   $f7████$t  
+   $f0████$t   $f1████$t   $f2████$t   $f3████$t   $f4████$t   $f5████$t   $f6████$t   $f7████$t  
+   $f0████$t   $f1████$t   $f2████$t   $f3████$t   $f4████$t   $f5████$t   $f6████$t   $f7████$t  
+
+
+EOF
