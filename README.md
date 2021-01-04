@@ -38,6 +38,9 @@ Clonar y copiar los archivos de configuracion:
 ```
 git clone https://github.com/mxhectorvega/dotfilesarchlinux
 
+mkdir .local
+mkdir .local/share
+
 cp -R ~/dotfilesarchlinux/.config/* ~/.config
 cp -R ~/dotfilesarchlinux/.local/* ~/.local
 
