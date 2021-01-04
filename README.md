@@ -91,7 +91,8 @@ git clone https://aur.archlinux.org/yay.git ; cd yay ; makepkg -si ; cd ~ ; rm -
 Los scripts esta en el directorio `.local/bin` donde podra modificarlos o tomar parte del codigo.
 
 **NOTA:**
-Para agregar o quitar modulos de polybar, debera modificar la linea 47 de `.config/polybar/config` donde podra modificarlos o tomar parte del codigo.
+Para agregar o quitar modulos de polybar, debera modificar la linea 47 de `.config/polybar/config` segun el nombre asignado ejemplo [module/fecha] el modulo es: fecha
+
 
 **Grupo telegram:**
 https://t.me/wmesp
