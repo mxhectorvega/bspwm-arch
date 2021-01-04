@@ -41,7 +41,6 @@ permisos de ejecucion con `chmod +x`).
 
 ```
 sudo pacman -S devmon ueberzug ffmpegthumbnailer feh mpd mpc ncmpcpp slock telegram-desktop htop xarchiver neofetch leafpad ranger pcmanfm lxappearance dunst maim xclip sxiv xdotool calcurse zathura zathura-pdf-mupdf neovim mpv screenkey
-
 ```
 
 **Fuentes y temas**
