@@ -45,7 +45,7 @@ chmod + x ~/.config/bspwm/*
 chmod + x ~/.local/bin*
 ```
 
-En caso de no tener pantalla de inicio de sesion, agregar `exec bspwm` al
+En caso de no tener pantalla de inicio de sesion, agregar en la linea 1: `sxhkd &` y en la linea 2: `exec bspwm` al
 archivo **~/.xinitrc, .xprofile o zprofile** (si no cuenta con el archivo, cree uno nuevo y asigne
 permisos de ejecucion con `chmod +x`).
 
