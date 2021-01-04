@@ -71,6 +71,11 @@ sudo pacman -S libreoffice-fresh-es kdenlive audacity gimp inkscape
 yay -S spotify spotify-adblock-linux --noeditmenu --noconfirm --needed
 ```
 
+**NOTA**
+
+Los scripts esta en el directorio `.local/bin` donde podra modificarlos o tomar parte del codigo).
+
+
 **Grupo telegram:**
 https://t.me/wmesp
 
