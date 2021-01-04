@@ -1,2 +1,0 @@
-#!/bin/bash
-curl -s "v2d.wttr.in/VER?lang=es"
