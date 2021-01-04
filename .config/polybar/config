@@ -44,7 +44,7 @@ module-margin-left = 1
 module-margin-right = 1
 modules-left = menu bspwm mpd
 modules-center = fecha
-modules-right =clima temp ram brillo battery pulseaudio wifi power
+modules-right =clima temp ram pulseaudio wifi power
 
 
 wm-restack = bspwm
@@ -332,7 +332,7 @@ click-left = st -e nmtui
 label = %output%
 label-padding = 0
 tail = true
-interval = 5
+interval = 20
 label-foreground = ${root.foreground}
 format-foreground = ${colors.color3}
 
@@ -354,7 +354,7 @@ click-left = st -e htop
 label = %output%
 label-padding = 0
 tail = true
-interval = 30
+interval = 10
 label-foreground = ${root.foreground}
 format-foreground = ${colors.color3}
 
@@ -366,6 +366,7 @@ label = %output%
 click-left =st -e less -Srf "/tmp/clima"
 label-padding = 0
 tail = true
+interval = 180
 label-foreground = ${root.foreground}
 format-foreground = ${colors.color3}
 
@@ -377,6 +378,7 @@ label = %output%
 label-padding = 0
 click-left = setsid -f st -e watch sensors
 tail = true
+interval = 20
 label-foreground = ${root.foreground}
 format-foreground = ${colors.color3}
 
@@ -407,6 +409,7 @@ exec = bar_bateria 2>/dev/null
 format = "<label>"
 label = %output%
 label-padding = 0
+interval = 5
 tail = true
 format-foreground = ${root.foreground}
 
@@ -416,6 +419,7 @@ exec = bar_fecha 2>/dev/null
 format = "<label>"
 label = %output%
 label-padding = 0
+interval = 5
 tail = true
 format-foreground = ${root.foreground}
 click-left = setsid -f st -e calcurse

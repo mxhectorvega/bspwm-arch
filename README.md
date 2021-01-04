@@ -5,6 +5,11 @@ BSPwm, polybar, rofi y un par de scripts que facilitan el uso diario, sin sacrif
 
 <img src="https://raw.githubusercontent.com/mxhectorvega/dotfilesarchlinux/main/screenshot.png" />
 
+
+**Importante:**
+Puede probar esta configuracion en una Maquina Virtual QEMU, VirtualBox, etc., instalando con mi script de instalacion rapida de ArchLinux, donde solo instala lo basico hasta el servidor X y asi probar sin afectar a su SO ppal.
+https://raw.githubusercontent.com/mxhectorvega/installarch/main/qemuxorg
+
 **Instalacion**
 
 Instalar BSPwm, Sxhkd y Rofi (para que funcione rofi con los temas debe instalar pywal desde pip3 `pip3 install pywal`).
@@ -46,31 +51,31 @@ permisos de ejecucion con `chmod +x`).
 **Dependencias**
 
 ```
-sudo pacman -S bc tmux imagemagick ueberzug ffmpegthumbnailer feh mpd mpc ncmpcpp slock telegram-desktop htop xarchiver neofetch leafpad ranger pcmanfm lxappearance dunst maim xclip sxiv xdotool calcurse zathura zathura-pdf-mupdf neovim mpv screenkey
+sudo pacman -S bc tmux imagemagick ueberzug ffmpegthumbnailer feh mpd mpc ncmpcpp slock telegram-desktop htop xarchiver neofetch leafpad ranger pcmanfm lxappearance dunst maim xclip sxiv xdotool calcurse zathura zathura-pdf-mupdf neovim mpv screenkey --noconfirm --needed
 ```
 
 **Temas**
 
 ```
-sudo pacman -S materia-gtk-theme materia-kde papirus-icon-theme
+sudo pacman -S materia-gtk-theme materia-kde papirus-icon-theme --noconfirm --needed
 ```
 
 **Bordes de ventanas redondeados (opcional)**
 
 ```
-yay -S picom-ibhagwan-git
+yay -S picom-ibhagwan-git --noconfirm --needed
 ```
 
 **Cosas que se ven en la terminal**
 
 ```
-yay -S cava-git cmatrix unimatrix pfetch tty-clock
+yay -S cava-git cmatrix unimatrix pfetch tty-clock --noconfirm --needed
 ```
 
 **Software de uso personal (opcional)**
 
 ```
-sudo pacman -S geany obs-studio libreoffice-fresh-es kdenlive audacity gimp inkscape
+sudo pacman -S geany obs-studio libreoffice-fresh-es kdenlive audacity gimp inkscape --noconfirm --needed
 
 yay -S spotify spotify-adblock-linux --noeditmenu --noconfirm --needed
 ```
