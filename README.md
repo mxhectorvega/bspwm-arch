@@ -7,6 +7,7 @@ BSPwm, polybar, rofi y un par de scripts que facilitan el uso diario, sin sacrif
 
 
 **Importante:**
+
 Puede probar esta configuracion en una Maquina Virtual QEMU, VirtualBox, etc., instalando con mi script de instalacion rapida de ArchLinux, donde solo instala lo basico hasta el servidor X y asi probar sin afectar a su SO ppal.
 https://raw.githubusercontent.com/mxhectorvega/installarch/main/qemuxorg
 
