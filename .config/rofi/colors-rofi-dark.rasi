@@ -1,20 +1,11 @@
-
-configuration {
-        show-icons: true;
-        disable-history:        true;
-        lines: 10;
-        columns: 1;
-        font: "SF Pro Display 12";
-        bw: 0;
-        eh: 1;
-        auto-select: false;
-        separator-style: "solid";
-        hide-scrollbar: true;
-}
 * {
+    background: #000000;
+    foreground: #ebdbb2;
+    active-background: #A65A27;
     active-foreground: @foreground;
     normal-background: @background;
     normal-foreground: @foreground;
+    urgent-background: #9A5222;
     urgent-foreground: @foreground;
 
     alternate-active-background: @background;
@@ -24,34 +15,28 @@ configuration {
     alternate-urgent-background: @background;
     alternate-urgent-foreground: @foreground;
 
+selected-active-background: #01B4CB;
     selected-active-foreground: @foreground;
+    selected-normal-background: @selected-active-background;
     selected-normal-foreground: @foreground;
+    selected-urgent-background: #B4652E;
     selected-urgent-foreground: @foreground;
 
     background-color: @background;
-    border-color: @foreground;
+    border-color: @background;
     spacing: 2;
 }
 
-/* Descomentar la linea siguiente para integrar con PYWAL rofi menu  y comentar la otra que le sigue o eliminarla */
-/* @import "/home/mxhectorvega/.cache/wal/colors-rofi-dark.rasi" */
-@import "colors-rofi-dark.rasi"
-
 #window {
-    location: north west;
-    width: 20%;
-    high: 60%;
-    x-offset: 0px;
-    y-offset: 27px;
     background-color: @background;
-    border: 1;
-    border-color: @selected-normal-background;
-    padding: 5;
+    border: 6;
+    border-color: @selected-active-background;
+    padding: 2.5ch;
 }
 
 #mainbox {
     border: 0;
-    padding: 5;
+    padding: 0;
 }
 
 #message {
@@ -66,7 +51,6 @@ configuration {
 
 #inputbar {
     children:   [ prompt,textbox-prompt-colon,entry,case-indicator ];
-    expand: false;
 }
 
 #textbox-prompt-colon {
@@ -107,7 +91,7 @@ configuration {
 
 #element.selected.normal {
     background-color: @selected-normal-background;
-    text-color: @normal-background;
+    text-color: @selected-normal-foreground;
 }
 
 #element.selected.urgent {
