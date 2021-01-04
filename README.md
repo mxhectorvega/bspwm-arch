@@ -70,15 +70,12 @@ yay -S spotify spotify-adblock-linux --noeditmenu --noconfirm --needed
 ```
 
 **Grupo telegram:**
-
 https://t.me/wmesp
 
 
 **Canal de tips:**
-
 https://t.me/mxhectorvega
 
 
 **Creditos:**
-
 @mxhectorvega @tenshalito @bourne_again @darch7 @codeassault
