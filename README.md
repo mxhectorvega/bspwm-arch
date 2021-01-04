@@ -7,7 +7,7 @@ BSPwm, polybar, rofi y un par de scripts que facilitan el uso diario, sin sacrif
 
 **Instalacion**
 
-Instalar BSPwm, Sxhkd y Rofi (para que funcione rofo con los temas debe instalar pywal desde pip3 `pip3 install pywal`).
+Instalar BSPwm, Sxhkd y Rofi (para que funcione rofi con los temas debe instalar pywal desde pip3 `pip3 install pywal`).
 
 ```
 sudo pacman -S bspwm sxhkd rofi
@@ -49,7 +49,7 @@ permisos de ejecucion con `chmod +x`).
 sudo pacman -S bc tmux imagemagick ueberzug ffmpegthumbnailer feh mpd mpc ncmpcpp slock telegram-desktop htop xarchiver neofetch leafpad ranger pcmanfm lxappearance dunst maim xclip sxiv xdotool calcurse zathura zathura-pdf-mupdf neovim mpv screenkey
 ```
 
-**Fuentes y temas**
+**Temas**
 
 ```
 sudo pacman -S materia-gtk-theme materia-kde papirus-icon-theme
