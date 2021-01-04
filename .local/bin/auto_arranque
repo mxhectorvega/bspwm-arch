@@ -1,5 +1,6 @@
 #!/bin/sh
 
+
 # Estas son los programas y directorios predeterminados.
 export PATH="${PATH}:$HOME/.local/bin"
 export SUDO_ASKPASS="$HOME/.local/bin/menu_pass"
@@ -8,9 +9,11 @@ export READER=zathura
 export TERMINAL=st
 export EDITOR=nvim
 
+
 # Aqui puede fijar una configuracion de dos monitores descomentando # la siguiente linea.
 #xrandr --output VGA-2-1 --mode 1440x900 --right-of HDMI-A-2 --rotate normal
 #xrandr -s 1600x900
+
 
 # Aqui puede agregar o quitar cosas del que inician con el gestor de ventanas.
 #pkill -9 polybar &
@@ -26,6 +29,7 @@ unclutter &
 #devmon &
 #picom &
 #mpd &
+
 
 # Archivo de ayuda, comentar linea # o borrarla cuando ya se aprenda los atajos del teclado.
 setsid st -e less -Srf $HOME/.config/sxhkd/sxhkdrc
