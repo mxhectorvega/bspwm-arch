@@ -1,0 +1,7 @@
+[Desktop Entry]
+# VERSION=3.38.1
+Name=youtube
+Comment=Youtube
+Exec=google-chrome-unstable --password-store=basic --app=https://youtube.com/
+Icon=google-chrome 
+Type=Application

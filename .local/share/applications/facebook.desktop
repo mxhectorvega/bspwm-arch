@@ -1,0 +1,7 @@
+[Desktop Entry]
+# VERSION=3.38.1
+Name=facebook
+Comment=Facebook
+Exec=google-chrome-unstable --password-store=basic --app=https://facebook.com/
+Icon=google-chrome 
+Type=Application

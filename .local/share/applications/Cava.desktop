@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Icon=Terminal
+Name=Cava
+Exec=st -e cava

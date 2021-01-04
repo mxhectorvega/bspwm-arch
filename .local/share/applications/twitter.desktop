@@ -1,0 +1,7 @@
+[Desktop Entry]
+# VERSION=3.38.1
+Name=twitter
+Comment=Twitter
+Exec=google-chrome-unstable --password-store=basic --app=https://twitter.com/
+Icon=google-chrome 
+Type=Application

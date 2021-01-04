@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=Bashtop
+Icon=Terminal
+Exec=st -e bashtop

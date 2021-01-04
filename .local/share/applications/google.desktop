@@ -1,0 +1,7 @@
+[Desktop Entry]
+# VERSION=3.38.1
+Name=google
+Comment=Google
+Exec=google-chrome-unstable --password-store=basic --app=https://google.com/
+Icon=google-chrome 
+Type=Application

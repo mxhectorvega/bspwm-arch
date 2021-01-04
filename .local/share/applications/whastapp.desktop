@@ -1,0 +1,7 @@
+[Desktop Entry]
+# VERSION=3.38.1
+Name=whatsapp
+Comment=Whatsapp
+Exec=google-chrome-unstable --password-store=basic --app=https://web.whatsapp.com/
+Icon=google-chrome 
+Type=Application
