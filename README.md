@@ -72,7 +72,7 @@ yay -S spotify spotify-adblock-linux --noeditmenu --noconfirm --needed
 ```
 
 **NOTA:**
-Los scripts esta en el directorio `.local/bin` donde podra modificarlos o tomar parte del codigo).
+Los scripts esta en el directorio `.local/bin` donde podra modificarlos o tomar parte del codigo.
 
 
 **Grupo telegram:**
