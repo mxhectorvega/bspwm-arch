@@ -83,6 +83,8 @@ yay -S spotify spotify-adblock-linux --noeditmenu --noconfirm --needed
 **NOTA:**
 Los scripts esta en el directorio `.local/bin` donde podra modificarlos o tomar parte del codigo.
 
+**NOTA:**
+Para agregar o quitar modulos de polybar, debera modificar la linea 47 de `.config/polybar/config` donde podra modificarlos o tomar parte del codigo.
 
 **Grupo telegram:**
 https://t.me/wmesp
