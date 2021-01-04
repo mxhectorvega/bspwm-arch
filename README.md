@@ -76,9 +76,15 @@ yay -S cava-git cmatrix unimatrix pfetch tty-clock --noconfirm --needed
 **Software de uso personal (opcional)**
 
 ```
-sudo pacman -S geany obs-studio libreoffice-fresh-es kdenlive audacity gimp inkscape --noconfirm --needed
+sudo pacman -S geany python-pip obs-studio libreoffice-fresh-es kdenlive audacity gimp inkscape --noconfirm --needed
 
 yay -S spotify spotify-adblock-linux --noeditmenu --noconfirm --needed
+```
+
+**En caso de no tener instalado YAY:**
+
+```
+git clone https://aur.archlinux.org/yay.git ; cd yay ; makepkg -si ; cd ~ ; rm -rf yay
 ```
 
 **NOTA:**
