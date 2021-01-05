@@ -181,7 +181,7 @@ super + Print
 
 # Ayuda atajos
 alt + F1
-	setsid st -e less -Srf $HOME/.config/sxhkd/sxhkdrc
+	zathura .local/share/atajosbspwm.pdf
 
 # Calendario
 alt + F2
