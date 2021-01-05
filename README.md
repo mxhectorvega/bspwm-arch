@@ -13,7 +13,7 @@ https://raw.githubusercontent.com/mxhectorvega/installarch/main/qemuxorg
 
 **Instalacion**
 
-Instalar BSPwm, Sxhkd y Rofi (para que funcione rofi con los temas debe instalar pywal desde pip3 `pip3 install pywal`).
+Instalar BSPwm, Sxhkd y Rofi (para que funcione rofi con los temas debe instalar pywal desde pip3 `pip install pywal`).
 
 ```
 sudo pacman -S bspwm sxhkd rofi

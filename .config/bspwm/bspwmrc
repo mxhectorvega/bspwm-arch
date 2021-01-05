@@ -1,16 +1,16 @@
 #! /bin/sh
 
 
+# En caso de moficar las prefrencias y software predeterminadas, editar el archivo .local/bin/cargar_preferencias
+. $HOME/.local/bin/cargar_preferencias
+
+
 # Comentar la siguiente linea en caso de no usar PYWAL.
-#. $HOME/.cache/wal/colors.sh &
+#. $HOME/.cache/wal/colors.sh
 
 
-# Si requiere modificar elementos del arranque, editar el archivo .local/bin/auto_arranque
-. $HOME/.local/bin/auto_arranque &
-
-
-# Editar si necesita mas espacios de trabajo.
-bspc monitor -d I II III IV V
+# Modifique elementos del arranque (opcional), editar el archivo .local/bin/auto_arranque
+. $HOME/.local/bin/auto_arranque
 
 
 # Ajustes de colores y modos de layouts.
