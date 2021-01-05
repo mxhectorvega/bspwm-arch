@@ -42,7 +42,7 @@ padding-left = 2
 padding-right = 2
 module-margin-left = 1
 module-margin-right = 1
-modules-left = menu bspwm mpd
+modules-left = menu bspwm
 modules-center = fecha
 modules-right =clima temp ram pulseaudio wifi power
 
@@ -296,7 +296,7 @@ label-foreground = ${colors.color3}
 label-margin-right = 0
 expand-right = true
 
-[module/shutdown]
+[module/power]
 type = custom/menu
 expand-right = true
 format-spacing = 1
@@ -307,10 +307,12 @@ label-close-foreground = ${colors.color2}
 label-separator = |
 label-separator-foreground = ${colors.foreground}
 
-menu-0-0 = Reiniciar
-menu-0-0-exec = reboot
+menu-0-0 = Bloquear
+menu-0-0-exec = slock
 menu-0-1 = Apagar
 menu-0-1-exec = poweroff
+;menu-0-2 = Reiniciar
+;menu-0-2-exec = reboot
 
 [settings]
 screenchange-reload = true
@@ -424,7 +426,7 @@ tail = true
 format-foreground = ${root.foreground}
 click-left = setsid -f st -e calcurse
 
-[module/power]
+[module/power2]
 type = custom/script
 click-left = menu_apagado
 label = 
