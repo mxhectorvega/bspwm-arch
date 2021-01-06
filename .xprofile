@@ -1,0 +1,15 @@
+
+
+# Estas son los programas y directorios predeterminados.
+export PATH="$PATH:$(du "$HOME/.local/bin" | cut -f2 | paste -sd ':' -)"
+export BROWSER=Gogle-chrome-unstable
+export READER=zathura
+export TERMINAL=st
+export EDITOR=nvim
+
+
+# Agregar lo menos posible para no cargar el arranque
+xset r rate 300 50 &
+wal -i "$(< "$HOME/.cache/wal/wal")"
+devmon &
+mpd &

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+loco=$(curl -s "wttr.in/veracruz?lang=es" | sed -n 3,7p)
+
+echo -e "$loco"
