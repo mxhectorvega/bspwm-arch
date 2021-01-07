@@ -1,5 +1,5 @@
 [Desktop Entry]
 Type=Application
 Icon=Terminal
-Name=ST
+Name=STerminal
 Exec=st -e tmux
