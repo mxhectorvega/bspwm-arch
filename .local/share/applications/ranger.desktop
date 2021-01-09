@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Ranger
+Comment=Launches the ranger file manager
+Icon=utilities-terminal
+Exec=st -e ranger
+Categories=ConsoleOnly;System;FileTools;FileManager
+MimeType=inode/directory;
+Keywords=File;Manager;Browser;Explorer;Launcher;Vi;Vim;Python

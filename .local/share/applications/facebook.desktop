@@ -3,5 +3,5 @@
 Name=facebook
 Comment=Facebook
 Exec=google-chrome-unstable --password-store=basic --app=https://facebook.com/
-Icon=google-chrome 
+Icon=google-chrome-unstable
 Type=Application

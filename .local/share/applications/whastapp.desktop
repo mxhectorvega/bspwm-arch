@@ -3,5 +3,5 @@
 Name=whatsapp
 Comment=Whatsapp
 Exec=google-chrome-unstable --password-store=basic --app=https://web.whatsapp.com/
-Icon=google-chrome 
+Icon=google-chrome-unstable
 Type=Application

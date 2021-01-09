@@ -1,5 +1,5 @@
 [Desktop Entry]
 Type=Application
 Name=Bashtop
-Icon=Terminal
+Icon=utilities-terminal
 Exec=st -e bashtop

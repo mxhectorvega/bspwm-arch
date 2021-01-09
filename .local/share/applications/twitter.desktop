@@ -3,5 +3,5 @@
 Name=twitter
 Comment=Twitter
 Exec=google-chrome-unstable --password-store=basic --app=https://twitter.com/
-Icon=google-chrome 
+Icon=google-chrome-unstable
 Type=Application

@@ -3,5 +3,5 @@
 Name=youtube
 Comment=Youtube
 Exec=google-chrome-unstable --password-store=basic --app=https://youtube.com/
-Icon=google-chrome 
+Icon=google-chrome-unstable
 Type=Application
