@@ -118,6 +118,13 @@ bindkey '^[[F' end-of-line
 # Load .zshrc.local
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
 
+# Load plugins
+[ -f /usr/share/zsh-history-substring-search/zsh-history-substring-search.zsh ] && source /usr/share/zsh-history-substring-search/zsh-history-substring-search.zsh || \
+{ [ -f /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh ] && source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh }
+
+# Load plugins
+[ -f /usr/share/zsh-completions/zsh-completions.zsh ] && source /usr/share/zsh-completions/zsh-completions.zsh || \
+{ [ -f /usr/share/zsh/plugins/zsh-completions/zsh-completions.zsh ] && source /usr/share/zsh/plugins/zsh-completions/zsh-completions.zsh }
 
 # Load plugins
 [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ] && source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh || \
