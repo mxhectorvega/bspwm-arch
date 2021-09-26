@@ -1,6 +1,6 @@
 # Load profile
 [ -f ~/.profile ] && source ~/.profile
-
+export PATH="$PATH:$(du "$HOME/.local/bin" | cut -f2 | paste -sd ':' -)"
 
 # Enable colors
 autoload -Uz colors && colors
