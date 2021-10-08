@@ -1,3 +1,3 @@
-# /bin/bash
+#!/bin/bash 
 
 figlet -f big r/unixporn | cowsay -n -s
