@@ -1,8 +1,5 @@
 # .bashrc
 
-# Incluir carpeta ~/.local/bin para ejecutar diversos script
-# export PATH="$PATH:$(du "$HOME/.local/bin" | cut -f2 | paste -sd ':' -)"
-
 # Source global definitions
 if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
@@ -29,3 +26,8 @@ fi
 
 unset rc
 export PS1="[\[$(tput sgr0)\]\[$(tput bold)\]\[\033[38;5;57m\]\u\[$(tput sgr0)\]@\[$(tput sgr0)\]\[$(tput bold)\]\[\033[38;5;33m\]\h\[$(tput sgr0)\]]-(\[$(tput sgr0)\]\[$(tput bold)\]\[\033[38;5;171m\]\w\[$(tput sgr0)\])\n>> \[$(tput sgr0)\]"
+
+export TERMINAL="urxvt"
+export EDITOR="nano -l"
+
+alias nano="nano -l"
