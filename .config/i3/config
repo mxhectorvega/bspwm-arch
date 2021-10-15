@@ -178,9 +178,9 @@ mode "resize" {
 # Window colors
 #                      background            background          text               text
 client.focused          #141414           #141414         #ffffff         #00ff00
-client.unfocused        #141414           #141414        #8f8f8f         #00ff00
+client.unfocused        #141414           #141414         #8f8f8f         #00ff00
 client.focused_inactive #141414           #141414         #8f8f8f         #00ff00
-client.urgent           #141414           #141414        #f00000         #00ff00
+client.urgent           #141414           #141414         #f00000         #00ff00
 
 
 # Start i3bar to display a workspace bar (plus the system information i3status
@@ -198,8 +198,8 @@ bar {
 		background #141414
 		separator #141414
 		#                  border         background          text
-		focused_workspace  #141414         #141414          #ffffff2
-		inactive_workspace #141414         #141414          #8f8f8f
+		focused_workspace  #141414         #141414          #ffffff
+		inactive_workspace #141414         #141414          #7f7f7f
 	        urgent_workspace   #141414         #141414          #f00000
         }
 }

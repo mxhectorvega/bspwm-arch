@@ -10,11 +10,18 @@ interval=15
 color=#FEC925
 
 [SOUND]
-full_text= 🔇:  0% 
+full_text= 🔇 0% 
 command=~/.config/i3blocks/scr/sonido
 interval=5
 signal=10
 
+[BATTERY]
+full_text= ♥️♥️♥️ 100%
+command=~/.config/i3blocks/scr/bateria
+pango=
+interval=30
+color=#8086e8
+
 [TIME_DATE]
-command=date +"📅 %a, %d %b - %H:%M"
+command=date +" 📅 %a, %d %b - %H:%M"
 interval=60
