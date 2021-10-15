@@ -38,7 +38,10 @@
 *.color15: #fdf6e3
 
 !! URxvt Appearance
-URxvt.font: xft:FiraCode Nerd Font Mono:size=9:antialias=true
+*.font: xft:Iosevka:style=Regular:size=10
+*.boldFont: xft:Iosevka:style=Bold:size=10
+*.italicFont: xft:Iosevka:style=Italic:size=10
+*.boldItalicFont: xft:Iosevka:style=Bold Italic:size=10
 URxvt.letterSpace: 0
 URxvt.lineSpace: 0
 URxvt.geometry: 92x24

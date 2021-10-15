@@ -4,9 +4,6 @@
 # Should you change your keyboard layout some time, delete
 # this file and re-run i3-config-wizard(1).
 
-# Remove green border on the left
-for_window [class="^.*"] border pixel 0
-
 # i3 config file (v4)
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
@@ -15,7 +12,7 @@ set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different fdont
 # is used in the bar {} block below.
-font pango:SF Compact Display Semibold 10
+font pango:Iosevka 10
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -112,17 +109,16 @@ bindsym $mod+a focus parent
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1"
-set $ws2 "2"
-set $ws3 "3"
-set $ws4 "4"
-set $ws5 "5"
-set $ws6 "6"
-set $ws7 "7"
-set $ws8 "8"
-set $ws9 "9"
-set $ws10 "10"
-
+set $ws1 "1:💻 Term"
+set $ws2 "2:📝 Code"
+set $ws3 "3:🌎 Www"
+set $ws4 "4:👥 Mesgs"
+set $ws5 "5:🎨 Desg"
+set $ws6 "6  🎵 Media"
+set $ws7 "7:😈 Otro"
+set $ws8 "8:😈 Otro"
+set $ws9 "9:😈 Otro"
+set $ws10 "10:😈 Otro"
 
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
@@ -153,7 +149,7 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m '¿Desea cerrar sesion?' -B 'Sí' 'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -180,7 +176,6 @@ mode "resize" {
         bindsym $mod+r mode "default"
 }
 
-
 # Window colors
 #                      background            background          text               text
 client.focused          #141414           #141414         #ffffff         #00ff00
@@ -193,28 +188,34 @@ client.urgent           #141414           #141414        #f00000         #00ff00
 # finds out, if available)
 # i3wm bar
 bar {
-        # Bar program
-        status_command i3blocks
-        # Position of the bar
-        position top
-	font pango:SF Compact Display Semibold 10
-        # Bar colors
-        colors {
+	# Bar program
+	status_command i3blocks
+	# status_command i3status
+	# Position of the bar
+	position top
+	font pango:Iosevka 10
+	# Bar colors
+	colors {
 		background #141414
 		separator #141414
 		#                  border         background          text
-		focused_workspace  #141414         #141414          #ffffff
+		focused_workspace  #141414         #141414          #ffffff2
 		inactive_workspace #141414         #141414          #8f8f8f
 	        urgent_workspace   #141414         #141414          #f00000
         }
 }
 
-# Atajos para acaptura de pantalla
-bindsym shift+Print exec "maim -m 1 -s | xclip -selection clipboard -t image/png"
-bindsym crtl+Print exec "maim -m 1 -i "$(xdotool getactivewindow)" | xclip -selection clipboard -t image/png"
-bindsym Print exec "maim -m 1 | xclip -selection clipboard -t image/png"
+# Atajos para acaptura de pantalla, es necesario tener instalado los paquetes xclip y maim
+bindsym Shift+Print exec maim -s | xclip -selection clipboard -t image/png # Captura de pantalla en area seleccionada
+bindsym Crtl+Print exec maim -i $(xdotool getactivewindow) | xclip -selection clipboard -t image/png # Captura de pantalla en ventana activa
+bindsym Print exec maim | xclip -selection clipboard -t image/png # Captura de pantalla completa
 
-# Software que inicia con el SO
-exec feh --bg-fill ~/Imágenes/walls2/1399.png
-exec xrdb ~/.Xresources
-exec xset r rate 300 50 &
+# Cosas que inicia con el SO
+for_window [class="^.*"] border pixel 0 # Eliminar linea verde molesta a la orlla de la pantalla
+# exec feh --bg-fill ~/Imágenes/walls2/1399.png # Coloca una imagen de fondo de escritorio
+exec xrdb .Xresources &
+exec xrdb ~/.Xresources & # Cargar la configuracion de Urxvt Terminal
+exec xset r rate 300 50 & Acelerar el cursos para escribir o desplazarte, es necesario tener instalado el paquete xset
+exec_always --no-startup-id xsetroot -solid '#707070' & Colocar un color solido de fondo de escritorio, es necesario tener instalado el paquete xsetrot
+exec xsetroot -cursor_name left_ptr & # Desactivar el cursor cargando al iniciar i3 es necesario tener instalado el paquete xsetrot
+
