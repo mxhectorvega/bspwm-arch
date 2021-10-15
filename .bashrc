@@ -27,7 +27,7 @@ fi
 unset rc
 export PS1="[\[$(tput sgr0)\]\[$(tput bold)\]\[\033[38;5;57m\]\u\[$(tput sgr0)\]@\[$(tput sgr0)\]\[$(tput bold)\]\[\033[38;5;33m\]\h\[$(tput sgr0)\]]-(\[$(tput sgr0)\]\[$(tput bold)\]\[\033[38;5;171m\]\w\[$(tput sgr0)\])\n>> \[$(tput sgr0)\]"
 
-export TERMINAL="urxvt"
+export TERMINAL="kitty"
 export EDITOR="nano -l"
 
 alias nano="nano -l"

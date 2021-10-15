@@ -30,11 +30,10 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
 
 # Use pactl to adjust volume in PulseAudio.
-set $refresh_i3status killall -SIGUSR1 i3blocks
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && pkill -RTMIN+1 i3blocks &
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && pkill -RTMIN+1 i3blocks &
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && pkill -RTMIN+1 i3blocks &
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && pkill -RTMIN+1 i3blocks &
 
 # Sreen brightness controls
 bindsym XF86MonBrightnessUp exec light -A 5 # incrementar brillo
@@ -44,7 +43,7 @@ bindsym XF86MonBrightnessDown exec light -U 5 # disminiur brillo
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec kitty
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -111,13 +110,13 @@ bindsym $mod+a focus parent
 # We use variables to avoid repeating the names in multiple places.
 set $ws1 "1:💻 Term"
 set $ws2 "2:📝 Code"
-set $ws3 "3:🌎 Www"
-set $ws4 "4:👥 Mesgs"
-set $ws5 "5:🎨 Desg"
-set $ws6 "6  🎵 Media"
-set $ws7 "7:😈 Otro"
-set $ws8 "8:😈 Otro"
-set $ws9 "9:😈 Otro"
+set $ws3 "3:📁 File"
+set $ws4 "4:🌎 Www"
+set $ws5 "5:👥 Msgs"
+set $ws6 "6:🎵 Media"
+set $ws7 "7:📄 Docs"
+set $ws8 "8:🎨 Draw"
+set $ws9 "9:🖥️ VMs"
 set $ws10 "10:😈 Otro"
 
 # switch to workspace
@@ -212,10 +211,10 @@ bindsym Print exec maim | xclip -selection clipboard -t image/png # Captura de p
 
 # Cosas que inicia con el SO
 for_window [class="^.*"] border pixel 0 # Eliminar linea verde molesta a la orlla de la pantalla
-# exec feh --bg-fill ~/Imágenes/walls2/1399.png # Coloca una imagen de fondo de escritorio
+exec feh --bg-fill ~/Imágenes/walls2/_rxno7gefjjs71.png # Coloca una imagen de fondo de escritorio
 exec xrdb .Xresources &
 exec xrdb ~/.Xresources & # Cargar la configuracion de Urxvt Terminal
 exec xset r rate 300 50 & Acelerar el cursos para escribir o desplazarte, es necesario tener instalado el paquete xset
-exec_always --no-startup-id xsetroot -solid '#707070' & Colocar un color solido de fondo de escritorio, es necesario tener instalado el paquete xsetrot
+# exec_always --no-startup-id xsetroot -solid '#707070' & Colocar un color solido de fondo de escritorio, es necesario tener instalado el paquete xsetrot
 exec xsetroot -cursor_name left_ptr & # Desactivar el cursor cargando al iniciar i3 es necesario tener instalado el paquete xsetrot
 
