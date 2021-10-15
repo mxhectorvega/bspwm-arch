@@ -204,12 +204,16 @@ bar {
         }
 }
 
+# Gestor de portapapeles para Dmenu y Rofi github.com/erebe/greenclip
+bindsym $mod+p exec greenclip print | sed '/^$/d' | dmenu -i -l 10 -p clipboard | xargs -r -d'\n' -I '{}' greenclip print '{}' 
+
 # Atajos para acaptura de pantalla, es necesario tener instalado los paquetes xclip y maim
 bindsym Shift+Print exec maim -s | xclip -selection clipboard -t image/png # Captura de pantalla en area seleccionada
 bindsym Crtl+Print exec maim -i $(xdotool getactivewindow) | xclip -selection clipboard -t image/png # Captura de pantalla en ventana activa
 bindsym Print exec maim | xclip -selection clipboard -t image/png # Captura de pantalla completa
 
 # Cosas que inicia con el SO
+exec greenclip daemon & # Gestor de portapapeles para Dmenu y Rofi github.com/erebe/greenclip
 for_window [class="^.*"] border pixel 0 # Eliminar linea verde molesta a la orlla de la pantalla
 exec feh --bg-fill ~/Imágenes/walls2/_rxno7gefjjs71.png # Coloca una imagen de fondo de escritorio
 exec xrdb .Xresources &
