@@ -6,17 +6,17 @@ BATTERY_POWER=$(echo "${BATTERY_INFO}" | upower -i $(upower -e | grep 'BAT') | g
 URGENT_VALUE=10
 
 if   [ "${BATTERY_POWER}" -gt 87 ]; then
-    BATTERY_ICON="♥️♥️♥️"
+    BATTERY_ICON="❤️❤️❤️❤️❤️"
 elif [ "${BATTERY_POWER}" -gt 63 ]; then
-     BATTERY_ICON="♥️♥️"
+     BATTERY_ICON="❤️❤️❤️❤️"
 elif [ "${BATTERY_POWER}" -gt 38 ]; then
-     BATTERY_ICON="♥️♥️"
+     BATTERY_ICON="❤️❤️❤️"
 elif [ "${BATTERY_POWER}" -gt 13 ]; then
-     BATTERY_ICON="♥️"
+     BATTERY_ICON="❤️❤️"
 elif [ "${BATTERY_POWER}" -le 13 ]; then
-     BATTERY_ICON="♥️"
+     BATTERY_ICON="💔"
 else
-    BATTERY_ICON="♥️"
+    BATTERY_ICON="💔"
 fi
 
 if [ "${BATTERY_STATE}" = "discharging" ]; then

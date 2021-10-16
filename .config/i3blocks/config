@@ -2,25 +2,26 @@
 full_text= 🔥 91.0% @ 89.2°C
 command=~/.config/i3blocks/scr/cpu
 interval=30
-color=#00B4EB
+color=#8086e8
 
 [MEM]
 command=free -h | awk '/Mem:/ { printf(" 🐏 %5s/%s \n", $3, $2)}'
 interval=15
-color=#FEC925
+color=#a4bd00
 
 [SOUND]
 full_text= 🔇 0% 
 command=~/.config/i3blocks/scr/sonido
 interval=5
 signal=10
+color=#FEC925
 
 [BATTERY]
 full_text= ♥️♥️♥️ 100%
 command=~/.config/i3blocks/scr/bateria
 pango=
 interval=30
-color=#8086e8
+color=#00B4EB
 
 [TIME_DATE]
 command=date +" 📅 %a, %d %b - %H:%M"
