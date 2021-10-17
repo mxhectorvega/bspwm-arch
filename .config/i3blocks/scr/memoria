@@ -1,0 +1,17 @@
+#! /bin/bash
+
+#Ram y Swap (la swap aparece de modo automatico si esta existente)
+
+#Contadores de consumo y cantidad total
+#ram=$(free -h | awk '/Mem:/ { printf(" 🐏 Ram:%5s/%s\n", $3, $2)}')
+#swap=$(free -h | awk '/Swap:/ { printf(" | Swap:%5s/%s\n", $3, $2)}')
+
+#Contadores solo de consumo
+#ram=$(free -h | awk '/Mem:/ { printf(" 🐏 Ram:"$3)}')
+#swap=$(free -h | awk '/Swap:/ { printf(" | Swap:"$3)}')
+
+#Contadores solo de consumo (sin nombres)
+ram=$(free -h | awk '/Mem:/ { printf(" 🐏 "$3)}')
+swap=$(free -h | awk '/Swap:/ { printf(" | "$3)}')
+
+echo -e "$ram$swap "

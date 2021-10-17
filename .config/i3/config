@@ -235,7 +235,8 @@ bindsym Print exec maim | xclip -selection clipboard -t image/png # Captura de p
 
 # Cosas que inicia con el SO
 exec greenclip daemon & # Demonio del gestor de portapapeles para Dmenu y Rofi github.com/erebe/greenclip
-exec feh --no-fehbg --bg-fill /home/vega/Imágenes/walls2/xcz4kyo191p71.jpg # Coloca una imagen de fondo de escritorio
+exec feh --bg-fill ~/Imágenes/walls2/hp2ezbnwmhr71.png 
+#exec feh --no-fehbg --bg-fill /home/vega/Imágenes/walls2/xcz4kyo191p71.jpg # Coloca una imagen de fondo de escritorio
 exec xrdb .Xresources & # Carga automaticamente las configs guardadas para Rxvt Terminal
 exec xrdb ~/.Xresources & # Cargar la configuracion de Urxvt Terminal
 exec xset r rate 300 50 & Acelerar el cursos para escribir o desplazarte, es necesario tener instalado el paquete xset
