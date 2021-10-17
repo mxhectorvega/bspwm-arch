@@ -25,8 +25,8 @@ fi
 
 echo "$ICON" "$SOUND_LEVEL" | awk '{printf ("%s% 3s%% \n", $1, $2)}'
 
-for i in $(seq 1 5)
-do
-    sleep 0.2
-    pkill -RTMIN+1 i3blocks
-done
+#for i in $(seq 1 5)
+#do
+#    sleep 0.2
+#    pkill -RTMIN+1 i3blocks
+#done
